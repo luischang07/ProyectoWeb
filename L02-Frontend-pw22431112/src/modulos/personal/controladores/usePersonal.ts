@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import type { Personal, PersonalAgregar } from "../interfaces/Personal-interface";
-import { personalAPI } from "../api/PersonalAPI";
+import { personalAPI } from "../api/personalAPI";
 /**
  * Hook personalizado para manejar operaciones CRUD de personal
  * @returns Objeto con variables reactivas y funciones para gestionar el personal
@@ -21,12 +21,13 @@ export const usePersonal = () => {
             const url = `/${queryParams ? '?' + queryParams : ''}`;
             const response = await personalAPI.get<{ data: Personal[], pagination: any }>(url);
             personal.value = response.data.data;
-            console.log(personal.value);
+            return response.data; // Devolver la respuesta completa incluyendo paginación
         } catch (error) {
             console.log(error);
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
     };
+    
 
     const setPersonal = async (personal: PersonalAgregar) => {
         try {
