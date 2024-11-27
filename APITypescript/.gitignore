@@ -1,0 +1,70 @@
+# Dependencias de Node
+node_modules/
+
+# Archivos de sistema de Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos de sistema de macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos de sistema de Linux
+*~
+
+# Configuración de JetBrains (WebStorm, PhpStorm, IntelliJ, etc.)
+.idea/
+
+# Configuración de VS Code
+.vscode/
+
+# Configuración de Eclipse
+.project
+.classpath
+.c9/
+
+# Configuración de Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# Archivos de backup
+*.bak
+*.backup
+
+# Directorios de salida
+#dist/
+##build/
+#tmp/
+#temp/
+#out/
+
+# Archivos de empaquetado
+*.zip
+*.tar.gz
+*.rar
+
+# Archivos de configuración con información sensible
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Claves y certificados
+*.pem
+*.key
+*.crt
