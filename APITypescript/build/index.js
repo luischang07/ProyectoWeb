@@ -27,13 +27,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const morgan_1 = __importDefault(require("morgan"));
 const personalRoutes_1 = __importDefault(require("./routes/personalRoutes"));
+const clientesRoutes_1 = __importDefault(require("./routes/clientesRoutes"));
 const dotenv = __importStar(require("dotenv"));
+const cors_1 = __importDefault(require("cors"));
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
+app.use((0, cors_1.default)());
+app.use((0, morgan_1.default)('dev'));
 app.use(express.json());
 app.use('/api/personal', personalRoutes_1.default);
+app.use('/api/clientes', clientesRoutes_1.default);
 app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT} http://localhost:3001/`);
+    console.log(`Server is running on PORT ${PORT} http://localhost:${PORT}/`);
 });
