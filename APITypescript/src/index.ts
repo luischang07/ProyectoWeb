@@ -15,5 +15,5 @@ app.use(express.json());
 app.use('/api/personal',personalRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT} http://localhost:3001/`);
+    console.log(`Server is running on PORT ${PORT} http://localhost:${PORT}/`);
 });

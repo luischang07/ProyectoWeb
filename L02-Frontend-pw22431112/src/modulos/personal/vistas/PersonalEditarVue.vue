@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref , watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { usePersonal } from '../controladores/usePersonal';
+import { usePersonal } from '../controladores/UsePersonal';
 import { errorToast, sucessToast } from '@/modulos/utils/displayToast';
 const {getPersonalById , updatePersonal , mensaje, personal} = usePersonal();
 
@@ -11,6 +11,7 @@ const route = useRoute();
 onMounted(async () => {
     idPersona = Number(route.params.id);
     await getPersonalById(Number(idPersona));
+    console.log(personal);
 });
 
 const showErrorToast = () => {

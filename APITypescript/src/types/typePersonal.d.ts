@@ -6,9 +6,4 @@ export interface Personal {
     estatus: number
 }
 
-export interface PersonalNuevo { 
-    nombre: string,
-    direccion: string,
-    telefono: string,
-    estatus: number
-}
+export type PersonalNuevo = Omit<Personal, 'id'>;

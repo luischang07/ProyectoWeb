@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref , watch } from 'vue';
 import { useRoute , useRouter } from 'vue-router';
-import { usePersonal } from '../controladores/usePersonal';
+import { usePersonal } from '../controladores/UsePersonal';
 import 'vue3-toastify/dist/index.css';
 const {getPersonalById , deletePersonal , mensaje, personal} = usePersonal();
 

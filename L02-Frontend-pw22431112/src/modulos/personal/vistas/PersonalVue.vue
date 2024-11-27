@@ -15,11 +15,11 @@
             </div>
             <div class="row mt-3">
             <div class="col-md-8">
-                <input type="text" class="form-control" v-model="searchQuery" placeholder="Buscar...">
+                <input type="text" class="form-control" v-model="filterValue" placeholder="Buscar...">
             </div>
             <div class="col-md-4 d-flex align-items-center">
-                <label for="searchField" class="form-label me-2 mb-0">Filtro:</label>
-                <select v-model="searchField" class="form-select">
+                <label for="filterField" class="form-label me-2 mb-0">Filtro:</label>
+                <select v-model="filterField" class="form-select">
                 <option value="nombre">Nombre</option>
                 <option value="direccion">Dirección</option>
                 <option value="telefono">Teléfono</option>
@@ -28,95 +28,75 @@
             </div>
         </div>
     </section>
-
-    <section class="container mt-3">
-        <div v-if="pagedPersonal.length > 0" class="row">
-            <div v-for="(persona, index) in pagedPersonal" :key="index" class="col-md-3 mb-4">
-                <div class="card h-100 card-hover">
-                    <div class="card-body">
-                        <h5 class="card-title">Clave: {{ persona.id }}</h5>
-                        <p class="card-text"><strong>Nombre:</strong> {{ persona.nombre }}</p>
-                        <p class="card-text"><strong>Dirección:</strong> {{ persona.direccion }}</p>
-                        <p class="card-text"><strong>Teléfono:</strong> {{ persona.telefono }}</p>
-                        <p class="card-text"><strong>Estatus:</strong> {{ persona.estatus }}</p>
-                        <div class="d-flex justify-content-between" role="group" aria-label="Basic outlined example">
-                        <router-link :to="{ path: '/personal/' + persona.id + '/editar' }" class="btn btn-sm btn-outline-primary btn-fade mx-2">
-                            Editar
-                            <i class="fa fa-pencil"></i>
-                        </router-link>
-                        <router-link :to="{ path: '/personal/' + persona.id + '/borrar' }" class="btn btn-sm btn-outline-danger btn-fade">
-                            Borrar
-                            <i class="fa fa-trash"></i>
-                        </router-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Paginación -->
-            <pagination
-            :currentPage="currentPage"
-            :totalPages="totalPages"
-            @update:currentPage="goToPage"
-            />
-        </div>
-        <div v-else class="alert alert-warning text-center" role="alert">
-        No hay registros
-        </div>
+    <section class="container text-center mt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="personal.length == 0">
+                    <td class="centrado" colspan="6">Sin Personal Registrado</td>
+                </tr>
+                <tr v-else v-for="(persona, index) in personal" :key="index">
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.direccion }}</td>
+                    <td>{{ persona.telefono }}</td>
+                    <td>{{ persona.estatus }}</td>
+                    <td class="centrado">
+                        <fieldset class="btn-group" aria-label="Basic outline example">
+                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/editar'}">
+                                    <i class="fa fa-edit"></i>
+                                </RouterLink>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger">
+                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/borrar'}">
+                                    <i class="fa fa-trash"></i>
+                                </RouterLink>
+                            </button>
+                        </fieldset>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { usePersonal } from '../controladores/usePersonal';
+import { usePersonal } from '../controladores/UsePersonal';
 import { errorToast, warningToast } from '@/modulos/utils/displayToast';
 import pagination from '@/modulos/utils/components/Pagination.vue';
 
 const { getPersonal, personal, mensaje } = usePersonal();
-const searchQuery = ref('');
-const searchField = ref('nombre');
-const currentPage = ref(1);
-const itemsPerPage = 12;
+const filterValue = ref('');
+const filterField = ref('nombre');
+const page = ref(1);
+const limit = 12;
 
-onMounted(async () => {
-await getPersonal();
-if (mensaje.value[0] === 'No fue posible conectarse con el servidor') {
-    errorToast(mensaje.value[0]);
-} else {
-    personal.value.length === 0 || personal.value.length === undefined
-    ? warningToast('No hay registros disponibles'): null;
-}
-});
+const fetchPersonal = async () => {
+    const params = {
+        page: page.value || 1,    // Página actual
+        limit: limit,      // Registros por página
+        filterField: filterField.value || '', // Filtro seleccionado
+        ...(filterValue.value ? { filterValue: filterValue.value } : {}), // Consulta de búsqueda
+    };
+    await getPersonal(params);
 
-watch(personal, (newVal) => {
-if (newVal.length === 0) {
-    warningToast('No hay registros disponibles');
-}
-});
-
-const filteredPersonal = computed(() => {
-const query = searchQuery.value.toLowerCase();
-return personal.value.filter((persona) => {
-    return (persona as { [key: string]: string | number })[searchField.value]
-    ?.toString()
-    .toLowerCase()
-    .includes(query);
-});
-});
-
-const totalPages = computed(() => {
-return Math.ceil(filteredPersonal.value.length / itemsPerPage);
-});
-
-const pagedPersonal = computed(() => {
-const startIndex = (currentPage.value - 1) * itemsPerPage;
-return filteredPersonal.value.slice(startIndex, startIndex + itemsPerPage);
-});
-
-const goToPage = (page: number) => {
-if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page;
-}
+    if (mensaje.value[0] === 'No fue posible conectarse con el servidor') {
+        errorToast(mensaje.value[0]);
+    }
 };
+
+onMounted(fetchPersonal);
+
+watch([filterValue, filterField, page], fetchPersonal);
 </script>
 
 <style scoped>

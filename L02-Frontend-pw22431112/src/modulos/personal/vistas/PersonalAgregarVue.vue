@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { ref , watch } from 'vue';
-import type { PersonalAgregar } from '../interfaces/personal-interface';
-import { usePersonal } from '../controladores/usePersonal';
+import type { PersonalAgregar } from '../interfaces/Personal-interface';
+import { usePersonal } from '../controladores/UsePersonal';
 import { errorToast, sucessToast } from '@/modulos/utils/displayToast';
 const {setPersonal, mensaje} = usePersonal();
+import { personalSchema } from '../schemas/PersonalSchema';
+import { Form, Field, ErrorMessage } from 'vee-validate';
 
     let personal = ref<PersonalAgregar>({
         nombre: '',
@@ -11,6 +13,10 @@ const {setPersonal, mensaje} = usePersonal();
         telefono: '',
         estatus: '0'
         });
+
+    const onValidated = async () => {
+        await setPersonal(personal.value);
+    };
     
     const showErrorToast = () => {
         if (mensaje.value && mensaje.value[0] !== 'Personal agregado con éxito') {
@@ -29,17 +35,6 @@ const {setPersonal, mensaje} = usePersonal();
         showSuccessToast();
     });
 
-    watch(mensaje, () => {
-        if (mensaje.value && mensaje.value[0] === 'Personal agregado con éxito') {
-            personal.value = {
-                nombre: '',
-                direccion: '',
-                telefono: '',
-                estatus: '0'
-            };
-        }
-    });
-
 </script>
 
 <template>
@@ -55,30 +50,39 @@ const {setPersonal, mensaje} = usePersonal();
                 {{ error }}
             </div>
             <div class="card-body">
-                <div class="mb-3">
-                    Nombre
-                    <input type="text" class="form-control" v-model="personal.nombre" placeholder="Nombre">
-                </div>
-                <div class="mb-3">
-                    Direccion
-                    <input type="text" class="form-control" v-model="personal.direccion" placeholder="Direccion">
-                </div>
-                <div class="mb-3">
-                    Telefono
-                    <input type="text" class="form-control" v-model="personal.telefono" placeholder="Telefono">
-                </div>
-                <div class="mb-3">
-                    Estatus
-                    <input type="text" class="form-control" v-model="personal.estatus" placeholder="Estatus">
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary" @click="setPersonal(personal)">Agregar</button>
-                </div>
-            </div>
+                <Form :validation-schema="personalSchema" @submit="onValidated">
+                    <div class="mb-3">
+                        Nombre
+                        <Field type="text" class="form-control" name="nombre" v-model="personal.nombre" placeholder="Nombre" />
+                        <ErrorMessage name="nombre" class="errorValidacion" />
+                    </div>
+                    <div class="mb-3">
+                        Direccion
+                        <Field type="text" class="form-control" name="direccion" v-model="personal.direccion" placeholder="Direccion" />
+                        <ErrorMessage name="direccion" class="errorValidacion" />
+                    </div>
+                    <div class="mb-3">
+                        Telefono
+                        <Field type="text" class="form-control" name="telefono" v-model="personal.telefono" placeholder="Telefono" />
+                        <ErrorMessage name="telefono" class="errorValidacion" />
+                    </div>
+                    <div class="mb-3">
+                        Estatus
+                        <Field type="text" class="form-control" name="estatus" v-model="personal.estatus" placeholder="Estatus" />
+                        <ErrorMessage name="estatus" class="errorValidacion" />
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </div>
+                </Form>
+            </div>                
         </div>    
     </div>
 </template>
 
 <style scoped>
-    
+    .errorValidacion{
+        color: red;
+        font-weight: bold;
+    }
 </style>
