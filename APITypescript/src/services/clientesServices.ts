@@ -1,4 +1,5 @@
 import { Cliente, ClienteNuevo } from "../types/typeClientes";
+import { Request } from "express";
 import { conexion } from "../config/bd";
 import { ClienteSchema } from "../schemas/cliente.Schema";
 
@@ -15,18 +16,53 @@ export const getClienteOne = async (id:number)=>{
     } 
 }
 
-export const getClientes = async ()=>{
+export const getClientes = async (req: Request) => {
     try {
-        const [results] = await conexion.query('SELECT * FROM clientes');
+        const { page = 1, limit = 12, filterField, filterValue } = req.query;
+        const offset = (Number(page) - 1) * Number(limit);
+
+        // Construir la consulta con los filtros
+        let query = 'SELECT * FROM clientes';
+        const params: any[] = [];
+
+        if (filterField && filterValue) {
+            query += ` WHERE ?? LIKE ?`;
+            params.push(filterField, `%${filterValue}%`);
+        }
+
+        query += ' LIMIT ? OFFSET ?';
+        params.push(Number(limit), offset);
+
+        // Ejecutar la consulta
+        const [results] = await conexion.query(query, params);
+
+        // Obtener el total de registros para la paginación
+        const [countResult] = await conexion.query(
+            `SELECT COUNT(*) as total FROM clientes ${filterField && filterValue ? 'WHERE ?? LIKE ?' : ''}`,
+            filterField && filterValue ? [filterField, `%${filterValue}%`] : []
+        );
+
+        const total = Array.isArray(countResult) ? (countResult[0] as any).total : 0;
+        const totalPages = Math.ceil(total / Number(limit));
 
         if (Array.isArray(results) && results.length > 0) {
-            return results;
-        }else{ return {mensaje:"No hay clientes para mostrar"}}
-
+            return {
+                data: results,
+                pagination: {
+                    currentPage: Number(page),
+                    totalPages,
+                    totalItems: total,
+                },
+            };
+        } else {
+            return { mensaje: 'No hay clientes para mostrar', data: [], pagination: { totalItems: 0 } };
+        }
     } catch (err) {
-        return {error:"No se puede obtener el cliente"}
-    } 
+        console.error(err);
+        throw new Error('No se puede obtener los clientes');
+    }
 };
+
 
 export const createCliente = async (nuevo:ClienteNuevo)=>{
     try {
