@@ -1,3 +1,7 @@
+import ClienteAgregarVue from '@/modulos/cliente/vistas/ClienteAgregarVue.vue'
+import ClienteBorrarVue from '@/modulos/cliente/vistas/ClienteBorrarVue.vue'
+import ClienteEditarVue from '@/modulos/cliente/vistas/ClienteEditarVue.vue'
+import ClienteVue from '@/modulos/cliente/vistas/ClienteVue.vue'
 import PersonalAgregarVue from '@/modulos/personal/vistas/PersonalAgregarVue.vue'
 import PersonalBorrar from '@/modulos/personal/vistas/PersonalBorrar.vue'
 import PersonalEditarVue from '@/modulos/personal/vistas/PersonalEditarVue.vue'
@@ -31,6 +35,26 @@ const router = createRouter({
       path: '/personal/:id/borrar',
       name: 'personalborrar',
       component: PersonalBorrar,
+    },
+    {
+      path: '/clientes',
+      name: 'clientes',
+      component: ClienteVue,
+    },
+    {
+      path: '/clientes/:id/editar',
+      name: 'clienteseditar',
+      component: ClienteEditarVue,
+    },
+    {
+      path: '/clientes/agregar',
+      name: 'clientesagregar',
+      component: ClienteAgregarVue,
+    },
+    {
+      path: '/clientes/:id/borrar',
+      name: 'clientesborrar',
+      component: ClienteBorrarVue,
     },
   ],
 })
