@@ -32,6 +32,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
@@ -44,6 +45,7 @@
                     <td class="centrado" colspan="6">Sin Personal Registrado</td>
                 </tr>
                 <tr v-else v-for="(persona, index) in personal" :key="index">
+                    <td>{{ persona.id }}</td>
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.direccion }}</td>
                     <td>{{ persona.telefono }}</td>
@@ -82,7 +84,7 @@ import Pagination from '@/modulos/utils/components/Pagination.vue';
 const { getPersonal, personal, mensaje } = usePersonal();
 const filterValue = ref('');
 const filterField = ref('nombre');
-const page = ref(1);
+const page = ref(Number(localStorage.getItem('currentPage')) || 1);
 const limit = 12;
 const totalPages = ref(1); // Total de páginas, actualiza este valor después de obtener datos
 
@@ -106,6 +108,7 @@ const fetchPersonal = async () => {
 
 const handlePageChange = (newPage: number) => {
     page.value = newPage;
+    localStorage.setItem('currentPage', newPage.toString());
 };
 
 onMounted(fetchPersonal);
