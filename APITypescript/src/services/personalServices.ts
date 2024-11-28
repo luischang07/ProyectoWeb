@@ -90,7 +90,7 @@ export const updatePersonal = async (modificado: Personal) => {
         if (!validacion.success) {
             return { error: validacion.error }
         }
-        const [results] = await conexion.query('UPDATE personal SET' +
+        const [results] = await conexion.query('UPDATE personal SET ' +
             'nombre = ?, direccion = ?, telefono = ?, estatus = ? WHERE id = ?',
             [modificado.nombre, modificado.direccion, modificado.telefono, modificado.estatus, modificado.id]);
         const result = results as unknown as { affectedRows: Personal };
