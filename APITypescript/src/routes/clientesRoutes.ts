@@ -1,10 +1,10 @@
 import express from "express";
-import { actualizarCliente, eliminarCliente, insertarCliente, obtenerClientes } from "../controller/clientesController";
+import { actualizarCliente, eliminarCliente, insertarCliente, obtenerClientes, obtenerUnCliente } from "../controller/clientesController";
 
 const router = express.Router();
 
 router.get('/', obtenerClientes);
-router.get('/:id', obtenerClientes);
+router.get('/:id', obtenerUnCliente);
 
 router.post('/', insertarCliente);
 

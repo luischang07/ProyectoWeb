@@ -1,8 +1,8 @@
 import * as ClienteService from '../services/clientesServices';
 import { Request, Response } from 'express';
 
-export const obtenerClientes = async (_req: Request, res: Response) => {
-    let clientes = await ClienteService.getClientes();
+export const obtenerClientes = async (req: Request, res: Response) => {
+    let clientes = await ClienteService.getClientes(req);
     res.json(clientes);
 };
 
