@@ -9,7 +9,6 @@ export const getRegistros = async ()=>{
         const [results] = await conexion.query('SELECT * FROM registros');
         return results;
     }catch(err){
-        console.log(err);
         return {error: "No se puede obtener los registros"}
     }
 }
@@ -24,7 +23,6 @@ export const createRegistro = async (registro: Registros)=>{
         const [results] = await conexion.query('INSERT INTO registro(id_personal,fecha,hora,movimiento) VALUES(?,?,?,?)', [registro.id_personal,registro.fecha,registro.hora,registro.movimiento]);
         return results;
     }catch(err){
-        console.log(err);
         return {error: "No se puede insertar el registro"}
     }
 }
@@ -39,7 +37,6 @@ export const deleteRegistro = async (id: number)=>{
         const [results] = await conexion.query('DELETE FROM registro WHERE id = ?', [id]);
         return results;
     }catch(err){
-        console.log(err);
         return {error: "No se puede borrar el registro"}
     }
 };

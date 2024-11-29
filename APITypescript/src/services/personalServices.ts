@@ -14,7 +14,6 @@ export const getPersonalOne = async (id: number) => {
 
         return results;
     } catch (err) {
-        console.log(err);
         return { error: "No se puede obtener el personal" }
     }
 }
@@ -24,7 +23,6 @@ export const getPersonalAll = async () => {
         const [results] = await conexion.query('SELECT * FROM personal');
         return results;
     } catch (err) {
-        console.log(err);
         return { error: "No se puede obtener el personal" }
     }
 }
@@ -71,7 +69,6 @@ export const getPersonal = async (req: Request) => {
             return { mensaje: 'No hay personal para mostrar', data: [], pagination: { totalItems: 0 } };
         }
     } catch (err) {
-        console.error(err);
         throw new Error('No se puede obtener el personal');
     }
 };
@@ -89,7 +86,6 @@ export const createPersonal = async (nuevo: PersonalNuevo) => {
                 'VALUES(?,?,?,?)', [nuevo.nombre, nuevo.direccion, nuevo.telefono, nuevo.estatus]);
         return results
     } catch (err) {
-        console.log(err);
         return { error: "No se puede crear el personal" }
     }
 }
@@ -110,7 +106,6 @@ export const updatePersonal = async (modificado: Personal) => {
         }
         return results
     } catch (err) {
-        console.log(err);
         return { error: "No se puede actualizar el personal" }
     }
 }
@@ -130,7 +125,6 @@ export const deletePersonal = async (id: number) => {
         }
         return { mensaje: "Personal eliminado" }
     } catch (err) {
-        console.log(err);
         return { error: "No se puede eliminar el personal" }
     }
 }
@@ -150,7 +144,6 @@ export const getPersonalTelefono = async (telefono: string) => {
         else { return { error: "No existe personal con ese numero" } }
 
     } catch (err) {
-        console.log(err);
         return { error: "No se puede obtener el personal" }
     }
 }

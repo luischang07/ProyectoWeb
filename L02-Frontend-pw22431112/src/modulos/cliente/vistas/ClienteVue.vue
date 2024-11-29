@@ -90,7 +90,7 @@ import pagination from '@/modulos/utils/components/Pagination.vue';
 const { getClientes, clientes, mensaje } = useCliente();
 const searchQuery = ref('');
 const searchField = ref('nombre');
-const currentPage = ref(1);
+const currentPage = ref(Number(localStorage.getItem('currentPageCliente')) || 1); // Se guarda la página actual en localStorage
 const itemsPerPage = 10;
 
 onMounted(async () => {
@@ -128,9 +128,11 @@ const pagedClientes = computed(() => {
     return filteredClientes.value.slice(startIndex, startIndex + itemsPerPage);
 });
 
+// Función para manejar el cambio de página
 const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
+        localStorage.setItem('currentPageCliente', page.toString()); // Guardar la página actual en localStorage
     }
 };
 </script>
