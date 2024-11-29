@@ -19,6 +19,16 @@ export const getPersonalOne = async (id: number) => {
     }
 }
 
+export const getPersonalAll = async () => {
+    try {
+        const [results] = await conexion.query('SELECT * FROM personal');
+        return results;
+    } catch (err) {
+        console.log(err);
+        return { error: "No se puede obtener el personal" }
+    }
+}
+
 export const getPersonal = async (req: Request) => {
     try {
         const { page = 1, limit = 12, filterField, filterValue } = req.query;
