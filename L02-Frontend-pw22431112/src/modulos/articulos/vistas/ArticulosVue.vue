@@ -2,11 +2,11 @@
     <section class="container text-center mt-3">
         <div class="row justify-content-between align-items-center p-2">
             <div class="col-md-6">
-                <h3>Personal</h3>
-                <p>Listado del personal registrado.</p>
+                <h3>Artículos</h3>
+                <p>Listado de los artículos registrados.</p>
             </div>
             <div class="col-md-3 text-right">
-                <router-link :to="{ path: '/personal/agregar' }">
+                <router-link :to="{ path: '/articulos/agregar' }">
                     <button class="btn btn-sm btn-outline-primary">
                         <i class="fa fa-plus"></i> Agregar
                     </button>
@@ -20,10 +20,8 @@
             <div class="col-md-4 d-flex align-items-center">
                 <label for="filterField" class="form-label me-2 mb-0">Filtro:</label>
                 <select v-model="filterField" class="form-select">
-                    <option value="nombre">Nombre</option>
-                    <option value="direccion">Dirección</option>
-                    <option value="telefono">Teléfono</option>
-                    <option value="estatus">Estatus</option>
+                    <option value="descripcion">Descripcion</option>
+                    <option value="precio">Precio</option>
                 </select>
             </div>
         </div>
@@ -33,32 +31,32 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Estatus</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Cantidad en almacen</th>
+                    <th>Caducidad</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-if="personal.length == 0">
-                    <td class="centrado" colspan="6">Sin Personal Registrado</td>
+                <tr v-if="articulos.length == 0">
+                    <td class="centrado" colspan="6">Sin Artículos Registrados</td>
                 </tr>
-                <tr v-else v-for="(persona, index) in personal" :key="index">
-                    <td>{{ persona.id }}</td>
-                    <td>{{ persona.nombre }}</td>
-                    <td>{{ persona.direccion }}</td>
-                    <td>{{ persona.telefono }}</td>
-                    <td>{{ persona.estatus }}</td>
+                <tr v-else v-for="(articulo, index) in articulos" :key="index">
+                    <td>{{ articulo.id }}</td>
+                    <td>{{ articulo.descripcion }}</td>
+                    <td>${{ articulo.precio }}</td>
+                    <td> {{ articulo.cantidad_en_almacen }}</td>
+                    <td>{{ articulo.fecha_caducidad }}</td>
                     <td class="centrado">
                         <fieldset class="btn-group" aria-label="Basic outline example">
                             <button type="button" class="btn btn-sm btn-outline-primary">
-                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/editar'}">
+                                <RouterLink class="nav-link item" :to="{path: '/articulos/'+articulo.id+'/editar'}">
                                     <i class="fa fa-edit"></i>
                                 </RouterLink>
                             </button>
                             <button type="button" class="btn btn-sm btn-outline-danger">
-                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/borrar'}">
+                                <RouterLink class="nav-link item" :to="{path: '/articulos/'+articulo.id+'/borrar'}">
                                     <i class="fa fa-trash"></i>
                                 </RouterLink>
                             </button>
@@ -77,25 +75,25 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-import { usePersonal } from '../controladores/UsePersonal';
+import { useArticulos } from '../controladores/useArticulos';
 import { errorToast } from '@/modulos/utils/displayToast';
 import Pagination from '@/modulos/utils/components/Pagination.vue';
 
-const { getPersonal, personal, mensaje } = usePersonal();
+const { getArticulos, articulos, mensaje } = useArticulos();
 const filterValue = ref('');
-const filterField = ref('nombre');
-const page = ref(Number(localStorage.getItem('currentPagePersonal')) || 1);
+const filterField = ref('descripcion');
+const page = ref(Number(localStorage.getItem('currentPageArticulos')) || 1);
 const limit = 12;
 const totalPages = ref(1); // Total de páginas, actualiza este valor después de obtener datos
 
-const fetchPersonal = async () => {
+const fetchArticulos = async () => {
     const params = {
         page: page.value,
         limit,
         filterField: filterField.value || '',
         ...(filterValue.value ? { filterValue: filterValue.value } : {}),
     };
-    const response = await getPersonal(params);
+    const response = await getArticulos(params);
 
     if (response && response.pagination) {
         totalPages.value = response.pagination.totalPages;
@@ -108,11 +106,11 @@ const fetchPersonal = async () => {
 
 const handlePageChange = (newPage: number) => {
     page.value = newPage;
-    localStorage.setItem('currentPagePersonal', newPage.toString());
+    localStorage.setItem('currentPageArticulos', newPage.toString());
 };
 
-onMounted(fetchPersonal);
-watch([filterValue, filterField, page], fetchPersonal);
+onMounted(fetchArticulos);
+watch([filterValue, filterField, page], fetchArticulos);
 </script>
 
 <style scoped>

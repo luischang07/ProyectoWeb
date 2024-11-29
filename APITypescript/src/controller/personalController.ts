@@ -53,7 +53,6 @@ const modificarPersonal = async (req: Request, res: Response) => {
             telefono,
             estatus
         });
-        console.log(modificado);
         res.json(modificado);
     } catch (error) {
         res.json({ error: "No se puede actualizar el personal" })
