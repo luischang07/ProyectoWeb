@@ -35,7 +35,10 @@ export const insertarArticulo = async (req: Request, res: Response) => {
 
 export const actualizarArticulo = async (req: Request, res: Response) => {
     try {
-        const { id, descripcion, precio, cantidad_en_almacen, fecha_caducidad } = req.body;
+        const { id, descripcion, precio, cantidad_en_almacen } = req.body;
+        let {fecha_caducidad} = req.body;
+        fecha_caducidad = new Date(fecha_caducidad);
+        console.log(fecha_caducidad);
         const articuloModificado = await articulosServices.updateArticulo({ id, descripcion, precio, cantidad_en_almacen, fecha_caducidad });
         res.json(articuloModificado);
     } catch (err) {

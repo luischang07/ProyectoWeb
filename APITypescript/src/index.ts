@@ -4,6 +4,7 @@ import personalRoutes from './routes/personalRoutes';
 import clientesRoutes from './routes/clientesRoutes';
 import articulosRoutes from './routes/articulosRoutes';
 import registrosRoutes from './routes/registrosRoutes';
+import comprasRoutes from './routes/comprasRoutes';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -19,6 +20,7 @@ app.use('/api/personal',personalRoutes);
 app.use('/api/clientes',clientesRoutes);
 app.use('/api/articulos',articulosRoutes);
 app.use('/api/registros',registrosRoutes);
+app.use('/api/compras',comprasRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT} http://localhost:${PORT}/`);
 });

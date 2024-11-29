@@ -7,7 +7,12 @@ import { ArticuloSchema } from "../schemas/articulo.Schema";
 
 export const getArticuloOne = async (id:number)=>{
     try {
-        const [results] = await conexion.query('SELECT * FROM articulos WHERE id = ? LIMIT 1',id);
+        const [rawResults] = await conexion.query('SELECT * FROM articulos WHERE id = ? LIMIT 1',id);
+
+        const results = Array.isArray(rawResults) ? rawResults.map(row => ({
+            ...row,
+            fecha_caducidad: new Date((row as any).fecha_caducidad).toISOString().split('T')[0]
+        })) : rawResults;
 
         if(Array.isArray(results) && results.length > 0){
             return results;
@@ -36,7 +41,11 @@ export const getArticulos = async (req: Request) => {
         params.push(Number(limit), offset);
 
         // Ejecutar la consulta
-        const [results] = await conexion.query(query, params);
+        const [rawResults] = await conexion.query(query, params);
+        const results = Array.isArray(rawResults) ? rawResults.map(row => ({
+            ...row,
+            fecha_caducidad: new Date((row as any).fecha_caducidad).toISOString().split('T')[0]
+        })) : rawResults;
 
         // Obtener el total de registros para la paginación
         const [countResult] = await conexion.query(

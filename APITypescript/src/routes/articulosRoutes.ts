@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/',obtenerArticulos);
 
-router.get('/articulos/:id',obtenerUnArticulo);
+router.get('/:id',obtenerUnArticulo); // GET http://localhost:3001/api/articulos/1
 
 router.post('/',insertarArticulo);
 
