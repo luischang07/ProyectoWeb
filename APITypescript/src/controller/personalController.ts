@@ -10,6 +10,17 @@ const obtenerPersonal = async (req: Request, res: Response) => {
         res.status(500).send({ error: 'No se puede obtener el personal' });
     }
 };
+
+export const obtenerPersonalSinPaginar = async (_req: Request, res: Response) => {
+    try {
+        const personal = await PersonalServices.getPersonalAll();
+        res.json(personal);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ error: 'No se puede obtener el personal' });
+    }
+};
+
 const obtenerUnPersonal = async (req: Request, res: Response) => {
     let personal = await PersonalServices.getPersonalOne(Number(req.params.id));
     res.json(personal)
