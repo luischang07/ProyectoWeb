@@ -5,7 +5,6 @@ import { z} from 'zod';
 const validaciones = {
     descripcionMin: "La descripción debe tener mas de 2",
     descripcionMax: "La descripción debe tener menos de 300 caracteres",
-    precio: "El precio debe ser un número entero", 
     cantidad_en_almacen:"La cantidad en almacen debe ser un número entero",
     fecha_caducidad: "La fecha de caducidad debe tener el formato dd-mm-aaaa",
 };
@@ -14,14 +13,14 @@ const validaciones = {
 export const ArticuloNuevoSchema = z.object({
     id: z.number().int(),
     descripcion: z.string().min(2,validaciones.descripcionMin).max(300,validaciones.descripcionMax),
-    precio: z.number().int(),
+    precio: z.number(),
     cantidad_en_almacen: z.number().int(),
     fecha_caducidad: z.date()
 })
 
 export const ArticuloSchema = z.object({
     descripcion: z.string().min(2,validaciones.descripcionMin).max(300,validaciones.descripcionMax),
-    precio: z.number().int(),
+    precio: z.number(),
     cantidad_en_almacen: z.number().int(),
     fecha_caducidad: z.date()
 })
