@@ -12,10 +12,8 @@ export const useArticulos = () => {
             const url = `/${queryParams ? '?' + queryParams : ''}`;
             const response = await articulosAPI.get<{ data: Articulos[], pagination: any }>(url);
             articulos.value = response.data.data;
-            console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
     };
@@ -32,7 +30,6 @@ export const useArticulos = () => {
             }
 
         } catch (error) {
-            console.log(error);
             mensaje.value = ['Error al intentar agregar articulos'];
         }
     }
@@ -52,19 +49,16 @@ export const useArticulos = () => {
             if (response.data.error) {
                 let { error } = response.data;
                 mensaje.value = error.issues.map((issue: { message: string }) => issue.message);
-                console.log(mensaje.value);
             } else {
                 mensaje.value = ['Articulo actualizado con éxito'];
             }
         } catch (error) {
-            console.log(error);
             mensaje.value = ['Error al intentar actualizar articulos'];
         }
     }
 
     const deleteArticulos = async (articulos: Articulos) => {
         try {
-            console.log(articulos+" desde useArticulos");
             const response = await articulosAPI.delete('/', { data: { id: articulos.id } })
             if (response.data.error) {
                 let { error } = response.data;

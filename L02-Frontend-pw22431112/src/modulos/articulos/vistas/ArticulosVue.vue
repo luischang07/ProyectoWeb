@@ -6,11 +6,11 @@
                 <p>Listado de los artículos registrados.</p>
             </div>
             <div class="col-md-3 text-right">
-                <router-link :to="{ path: '/articulos/agregar' }">
+                <RouterLink :to="{ path: '/articulos/agregar' }">
                     <button class="btn btn-sm btn-outline-primary">
                         <i class="fa fa-plus"></i> Agregar
                     </button>
-                </router-link>
+                </RouterLink>
             </div>
         </div>
         <div class="row mt-3">
@@ -27,14 +27,14 @@
         </div>
     </section>
     <section class="container text-center mt-3">
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead>
-                <tr>
+                <tr class="table-info">
                     <th>ID</th>
                     <th>Descripcion</th>
                     <th>Precio</th>
                     <th>Cantidad en almacen</th>
-                    <th>Caducidad</th>
+                    <th>Fecha de Caducidad</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -47,19 +47,15 @@
                     <td>{{ articulo.descripcion }}</td>
                     <td>${{ articulo.precio }}</td>
                     <td> {{ articulo.cantidad_en_almacen }}</td>
-                    <td>{{ articulo.fecha_caducidad }}</td>
+                    <td>{{ articulo.fecha_caducidad === '1969-12-31' ? 'Sin fecha de caducidad' : articulo.fecha_caducidad }}</td>
                     <td class="centrado">
                         <fieldset class="btn-group" aria-label="Basic outline example">
-                            <button type="button" class="btn btn-sm btn-outline-primary">
-                                <RouterLink class="nav-link item" :to="{path: '/articulos/'+articulo.id+'/editar'}">
-                                    <i class="fa fa-edit"></i>
-                                </RouterLink>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-danger">
-                                <RouterLink class="nav-link item" :to="{path: '/articulos/'+articulo.id+'/borrar'}">
-                                    <i class="fa fa-trash"></i>
-                                </RouterLink>
-                            </button>
+                            <RouterLink class="item btn btn-sm btn-outline-primary p-2 m-1" :to="{path: '/articulos/'+articulo.id+'/editar'}">
+                                <i class="fa fa-edit"></i>
+                            </RouterLink>
+                            <RouterLink class="btn btn-sm btn-outline-danger p-2 m-1" :to="{path: '/articulos/'+articulo.id+'/borrar'}">
+                                <i class="fa fa-trash"></i>
+                            </RouterLink>
                         </fieldset>
                     </td>
                 </tr>
