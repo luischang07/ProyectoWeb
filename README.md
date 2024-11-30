@@ -1,7 +1,5 @@
 # Proyecto Final de programacion web
-Instrucciones: Tomando como base los proyectos de API/Backend y VueJS/Frontend, continúe con la programación de los módulos faltantes de acuerdo 
-con la lista siguiente: 
-
+Proyecto de API/Backend y VueJS/Frontend:
  - Módulo Clientes (id del cliente, nombre, dirección, teléfono, correo 
 electrónico, ciudad). 
 
@@ -21,24 +19,6 @@ subtotal, total, fecha de compra).
  - Backend: NodeJS, TypeScript, express, cors, Zod, base de datos MySQL conectada con MySQL2. 
 
  - Frontend: VueJS 3 con Vite, TypeScript, Axios, Zod. 
-
- - Los módulos y características de los puntos anteriores es lo mínimo obligatorio. 
-Cualquier otro paquete o biblioteca que les sirva para el proyecto es permitida. 
-Así como también otro módulo que incluyan o mejora de los que están les aumentará calificación.
-
- - Las características de diseño CSS3 que vimos, incluídos Grid o Flexbox 
-deberán usarlas para mejorar el aspecto del proyecto, es importante una buena 
-apariencia. 
-
-- El trabajo es en equipo: máximo 4 integrantes.
-
- - Lo entregará un solo integrante del equipo  por la plataforma Teams en una tarea que se abrirá para ese propósito. Es indispensable que incluyan un archivo de texto con los nombres completos de todo el equipo.
-
- - Para la entrega: un archivo comprimido (ZIP) con una carpeta que incluya las carpetas del backend, frontend y la estructura SQL de las tablas con el nombre de su base de datos. Antes de comprimirlas eliminen las carpetas 
-node_modules.
-
- - Fecha de entrega: 11 de diciembre 2024.
-
 
 ## Instalacion
 
