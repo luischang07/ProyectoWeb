@@ -24,9 +24,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container mt-5" v-if="articulos[0]">
-    <div class="card">
-      <div class="card-header">
+  <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100" v-if="articulos[0]">
+    <div class="card w-100 col-lg-8 col-md-10 col-sm-12 shadow-lg bg-light small-card">
+      <div class="card-header border-custom">
         <h4 class="text-center">Borrar Artículo</h4>
       </div>
       <div
@@ -47,55 +47,73 @@ onMounted(async () => {
       </div>
       <div class="card-body">
         <div class="mb-3">
-          Id:
-          <input
+          <label for="id">ID</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-hash"></i></span>
+            <input
             type="text"
             class="form-control"
             v-model="articulos[0].id"
             placeholder="Id"
             disabled
           />
+          </div>
+
         </div>
         <div class="mb-3">
-          Descripción:
-          <input
+          <label for="descripcion">Descripción:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+            <input
             type="text"
             class="form-control"
             v-model="articulos[0].descripcion"
             placeholder="Descripción"
             disabled
           />
+          </div>
+
         </div>
         <div class="mb-3">
-          Precio:
-          <input
+          <label for="precio">Precio:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+            <input
             type="number"
             class="form-control"
             v-model="articulos[0].precio"
             placeholder="Precio"
             disabled
           />
+          </div>
         </div>
         <div class="mb-3">
-          Cantidad en Almacén:
-          <input
+          <label for="cantidad_en_almacen">Cantidad en Almacén:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-box"></i></span>
+            <input
             type="number"
             class="form-control"
             v-model="articulos[0].cantidad_en_almacen"
             placeholder="Cantidad en Almacén"
             disabled
           />
+          </div>
         </div>
         <div class="mb-3">
-          Fecha de Caducidad:
-          <input
+          <label for="fecha_caducidad">Fecha de Caducidad:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar2-week"></i></span>
+            <input
             type="date"
             class="form-control"
             v-model="articulos[0].fecha_caducidad"
             disabled
           />
+          </div>
+
         </div>
-        <div class="mb-3">
+        <div class="mb-3 text-center">
           <button class="btn btn-danger" @click="deleteArticulos(articulos[0])">
             Eliminar
           </button>
@@ -106,4 +124,19 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.border-custom {
+    border: 3px solid #ff0000;
+    border-radius: 20px;
+    background-color: #ffcdd2;
+}
+
+.small-card {
+    max-width: 600px;
+    width: 100%;
+}
+
+.card {
+    margin: 0 auto;
+    padding: 2rem;
+}
 </style>

@@ -35,9 +35,9 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-bordered">
                         <thead>
-                            <tr>
+                            <tr class="table-info">
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Dirección</th>
@@ -48,6 +48,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr v-if="clientes.length == 0">
+                                <td class="centrado" colspan="7">Sin Clientes Registrados</td>
+                            </tr>
                             <tr v-for="cliente in pagedClientes" :key="cliente.id">
                                 <td>{{ cliente.id }}</td>
                                 <td>{{ cliente.nombre }}</td>
@@ -56,14 +59,12 @@
                                 <td>{{ cliente.correo_electronico }}</td>
                                 <td>{{ cliente.ciudad }}</td>
                                 <td>
-                                    <router-link :to="{ path: '/clientes/'+ cliente.id +'/editar/' }">
-                                        <button class="btn btn-sm btn-outline-primary">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                    </router-link>
-                                    <router-link :to="{ path: '/clientes/' + cliente.id + '/borrar' }" class="btn btn-sm btn-outline-danger btn-fade">
+                                    <RouterLink title="Editar" :to="{ path: '/clientes/'+ cliente.id +'/editar/' } " class="btn btn-sm btn-outline-primary p-2 m-1">
+                                        <i class="fa fa-edit"></i>
+                                    </RouterLink>
+                                    <RouterLink title="Eliminar" :to="{ path: '/clientes/' + cliente.id + '/borrar' }" class="btn btn-sm btn-outline-danger p-2 m-1">
                                         <i class="fa fa-trash"></i>
-                                    </router-link>
+                                    </RouterLink>
                                 </td>
                             </tr>
                         </tbody>
@@ -86,6 +87,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useCliente } from '../controladores/useCliente';
 import { errorToast, warningToast } from '@/modulos/utils/displayToast';
 import pagination from '@/modulos/utils/components/Pagination.vue';
+import { RouterLink } from 'vue-router';
 
 const { getClientes, clientes, mensaje } = useCliente();
 const searchQuery = ref('');
@@ -97,9 +99,6 @@ onMounted(async () => {
     await getClientes();
     if (mensaje.value[0] === 'No fue posible conectarse con el servidor') {
         errorToast(mensaje.value[0]);
-    } else {
-        clientes.value.length === 0 || clientes.value.length === undefined
-        ? warningToast('No hay registros disponibles'): null;
     }
 });
 

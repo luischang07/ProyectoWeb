@@ -6,7 +6,7 @@ const validaciones = {
     descripcionMin: "La descripción debe tener más de 2 caracteres",
     descripcionMax: "La descripción debe tener menos de 300 caracteres",
     cantidad_en_almacen: "La cantidad en almacén debe ser un número entero positivo",
-    fecha_caducidad: "La fecha de caducidad debe tener el formato dd-mm-aaaa",
+    fecha_caducidad: "La fecha de caducidad debe tener el formato yyyy-mm-dd",
     precio: "El precio debe ser un número positivo",
     requerido: "Este campo es requerido"
 };
@@ -23,7 +23,8 @@ export const ArticuloEditarSchema = toTypedSchema(
             z.number().positive(validaciones.precio)
         ),
         cantidad_en_almacen: z.number().int('Debe ser entero').positive(validaciones.cantidad_en_almacen),
-        fecha_caducidad: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, validaciones.fecha_caducidad), // Corregir regex para "yyyy-mm-dd"
+        // Permitir nulos en el campo 'fecha_caducidad'
+        fecha_caducidad: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, validaciones.fecha_caducidad).or(z.null()), // Permite null
     })
 );
 
@@ -37,6 +38,7 @@ export const ArticuloAgregarSchema = toTypedSchema(
             z.number().positive(validaciones.precio)
         ),
         cantidad_en_almacen: z.number().int('Debe ser entero').positive(validaciones.cantidad_en_almacen),
-        fecha_caducidad: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, validaciones.fecha_caducidad), // Corregir regex para "yyyy-mm-dd"
+        // Permitir nulos en el campo 'fecha_caducidad'
+        fecha_caducidad: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, validaciones.fecha_caducidad).or(z.null()), // Permite null
     })
 );

@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-5" v-if="articulos[0]">
-    <div class="card">
-      <div class="card-header">
+  <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100" v-if="articulos[0]">
+    <div class="card w-100 col-lg-8 col-md-10 col-sm-12 shadow-lg bg-light small-card">
+      <div class="card-header border-custom">
         <h4 class="text-center">Editar Artículo</h4>
       </div>
       <div
@@ -22,70 +22,45 @@
       </div>
       <div class="card-body">
         <!-- Formulario con validación -->
-        <Form :validation-schema="ArticuloEditarSchema" @submit="updateArticulos(articulos[0])">
+        <Form :validation-schema="ArticuloEditarSchema" @submit="onValidated">
+          <!-- descripcion -->
           <div class="mb-3">
-            Id:
-            <input
-              type="text"
-              class="form-control"
-              v-model="articulos[0].id"
-              placeholder="Id"
-              disabled
-            />
-          </div>
-          <div class="mb-3">
-            Descripción:
-            <Field
-              type="text"
-              class="form-control"
-              name="descripcion"
-              v-model="articulos[0].descripcion"
-              placeholder="Descripción"
-            />
+            <label for="descripcion">Descripción</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+              <Field type="text" class="form-control" name="descripcion" v-model="articulos[0].descripcion" placeholder="Descripción" />
+            </div>
             <ErrorMessage name="descripcion" class="errorValidacion" />
           </div>
+          <!-- Precio -->
           <div class="mb-3">
-            Precio:
-            <Field
-              type="number"
-              class="form-control"
-              name="precio"
-              v-model="precioFloat"
-              placeholder="Precio"
-            />
+            <label for="precio">Precio</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+              <Field type="number" class="form-control" name="precio" v-model="articulos[0].precio" placeholder="Precio" />
+            </div>
             <ErrorMessage name="precio" class="errorValidacion" />
           </div>
+          <!-- Cantidad en Almacén -->
           <div class="mb-3">
-            Cantidad en Almacén:
-            <Field
-              type="number"
-              class="form-control"
-              name="cantidad_en_almacen"
-              v-model="articulos[0].cantidad_en_almacen"
-              placeholder="Cantidad en Almacén"
-            />
+            <label for="cantidad_en_almacen">Cantidad en Almacén</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-box"></i></span>
+              <Field type="number" class="form-control" name="cantidad_en_almacen" v-model="articulos[0].cantidad_en_almacen" placeholder="Cantidad en Almacén" />
+            </div>
             <ErrorMessage name="cantidad_en_almacen" class="errorValidacion" />
           </div>
+          <!-- Fecha de Caducidad -->
           <div class="mb-3">
-            Fecha de Caducidad:
-            <Field
-              type="date"
-              class="form-control"
-              name="fecha_caducidad"
-              v-model="articulos[0].fecha_caducidad"
-            />
+            <label for="fecha_caducidad">Fecha de Caducidad</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-calendar2-week"></i></span>
+              <Field type="date" class="form-control" name="fecha_caducidad" v-model="articulos[0].fecha_caducidad" placeholder="Fecha de Caducidad" />
+            </div>
             <ErrorMessage name="fecha_caducidad" class="errorValidacion" />
           </div>
-          <div class="mb-3">
-            <button
-              type="submit"
-              class="btn btn-warning"
-              :disabled="disableButton"
-              @click="updateArticulos(articulos[0])"
-            >
-              Actualizar
-            </button>
-            <p v-if="disableButton">Redirigiendo en {{ tiempo }}...</p>
+          <div class="mb-3 text-center">
+            <button type="submit" class="btn border-custom">Actualizar</button>
           </div>
         </Form>
       </div>
@@ -131,6 +106,11 @@ const precioFloat = computed({
   }
 });
 
+
+const onValidated = async () => {
+  await updateArticulos(articulos.value[0]);
+};
+
 const showSuccessToast = () => {
   if (mensaje.value && mensaje.value[0] === 'Articulo actualizado con éxito') {
     sucessToast('Artículo actualizado con éxito');
@@ -170,5 +150,21 @@ const timerRedirect = () => {
 /* Estilos adicionales si es necesario */
 .errorValidacion {
   color: red;
+}
+
+.border-custom {
+    border: 3px solid #ffd700; /* Golden yellow border */
+    border-radius: 20px;
+    background-color: #fffacd; /* Light yellow background */
+}
+
+.small-card {
+    max-width: 600px; /* Puedes ajustar este valor según el tamaño que desees */
+    width: 100%;
+}
+
+.card {
+    margin: 0 auto;
+    padding: 2rem;
 }
 </style>

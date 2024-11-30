@@ -15,7 +15,6 @@ export const useCliente = () => {
             clientes.value = response.data.data; // Ajustado para reflejar la respuesta del API
             return response.data; // Devolver la respuesta completa incluyendo paginación
         } catch (error) {
-            console.log(error);
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
     };

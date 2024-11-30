@@ -58,20 +58,20 @@ const timerRedirect = () => {
 </script>
 
 <template>
-  <div class="container mt-5" v-if="clientes[0]">
-    <div class="card">
-      <div class="card-header">
+  <div class="container-fluid d-flex justify-content-center align-items-center min-vh-10" v-if="clientes[0]">
+    <div class="card w-100 col-lg-8 col-md-10 col-sm-12 shadow-lg bg-light small-card">
+      <div class="card-header border-custom">
         <h4 class="text-center">Editar Cliente</h4>
       </div>
       <div
-        class="alert alert-success text-center"
+        class="alert alert-success text-center mt-3 p-2"
         v-if="mensaje && mensaje[0] === 'Cliente actualizado con éxito'"
         role="alert"
       >
         {{ mensaje[0].toString() }}
       </div>
       <div
-        class="alert alert-danger text-center"
+        class="alert alert-danger text-center mt-3 p-2"
         v-for="(error, index) in mensaje"
         :key="index"
         v-if="mensaje && mensaje[0] !== 'Cliente actualizado con éxito'"
@@ -82,72 +82,96 @@ const timerRedirect = () => {
       <div class="card-body">
         <!-- Formulario con validación -->
         <Form :validation-schema="clienteSchema" @submit="updateCliente(clientes[0])">
+          <!-- ID -->
           <div class="mb-3">
-            Id:
-            <input
+            <label for="id" class="form-label">ID</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+              <input
               type="text"
               class="form-control"
               v-model="clientes[0].id"
               placeholder="Id"
               disabled
             />
+            </div>
           </div>
+          <!-- Nombre -->
           <div class="mb-3">
-            Nombre
-            <Field
+            <label for="nombre" class="form-label"> Nombre</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <Field
               type="text"
               class="form-control"
               name="nombre"
               v-model="clientes[0].nombre"
               placeholder="Nombre"
             />
+            </div>
             <ErrorMessage name="nombre" class="errorValidacion" />
           </div>
+          <!-- Direccion -->
           <div class="mb-3">
-            Dirección
-            <Field
+            <label for="direccion" class="form-label"> Direccion</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+              <Field
               type="text"
               class="form-control"
               name="direccion"
               v-model="clientes[0].direccion"
               placeholder="Dirección"
             />
+            </div>
             <ErrorMessage name="direccion" class="errorValidacion" />
           </div>
+          <!-- Telefono -->
           <div class="mb-3">
-            Teléfono
-            <Field
+            <label for="telefono" class="form-label"> Telefono</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+              <Field
               type="text"
               class="form-control"
               name="telefono"
               v-model="clientes[0].telefono"
               placeholder="Teléfono"
             />
+            </div>
             <ErrorMessage name="telefono" class="errorValidacion" />
           </div>
+          <!-- Correo Electrónico -->
           <div class="mb-3">
-            Correo Electrónico
-            <Field
+            <label for="correo_electronico" class="form-label"> Correo Electrónico</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <Field
               type="email"
               class="form-control"
               name="correo_electronico"
               v-model="clientes[0].correo_electronico"
               placeholder="Correo Electrónico"
             />
+            </div>
             <ErrorMessage name="correo_electronico" class="errorValidacion" />
           </div>
+          <!-- Ciudad -->
           <div class="mb-3">
-            Ciudad
-            <Field
+            <label for="ciudad" class="form-label"> Ciudad</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+              <Field
               type="text"
               class="form-control"
               name="ciudad"
               v-model="clientes[0].ciudad"
               placeholder="Ciudad"
             />
-            <ErrorMessage name="ciudad" class="errorValidacion" />
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- Botón -->
+          <div class="mb-3 text-center">
             <button
               type="submit"
               class="btn btn-warning"
@@ -155,8 +179,8 @@ const timerRedirect = () => {
             >
               Actualizar
             </button>
-            <p v-if="disableButton">Redirigiendo en {{ tiempo }}...</p>
           </div>
+          <p class="text-center" v-if="disableButton">Redirigiendo en {{ tiempo }}...</p>
         </Form>
       </div>
     </div>
@@ -164,8 +188,22 @@ const timerRedirect = () => {
 </template>
 
 <style scoped>
-/* Estilos adicionales si es necesario */
 .errorValidacion {
   color: red;
+}
+.border-custom {
+    border: 3px solid #ffd700; /* Golden yellow border */
+    border-radius: 20px;
+    background-color: #fffacd; /* Light yellow background */
+}
+
+.small-card {
+    max-width: 600px; /* Puedes ajustar este valor según el tamaño que desees */
+    width: 100%;
+}
+
+.card {
+    margin: 0 auto;
+    padding: 2rem;
 }
 </style>
