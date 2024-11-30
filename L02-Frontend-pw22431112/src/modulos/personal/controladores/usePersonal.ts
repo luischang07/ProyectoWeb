@@ -1,5 +1,5 @@
 import { ref } from "vue"
-import type { Personal, PersonalAgregar } from "../interfaces/Personal-interface";
+import type { Personal, PersonalAgregar } from "../interfaces/personal-interface";
 import { personalAPI } from "../api/personalAPI";
 /**
  * Hook personalizado para manejar operaciones CRUD de personal
@@ -23,7 +23,6 @@ export const usePersonal = () => {
             personal.value = response.data.data;
             return response.data; // Devolver la respuesta completa incluyendo paginación
         } catch (error) {
-            console.log(error);
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
     };
@@ -41,7 +40,6 @@ export const usePersonal = () => {
             }
 
         } catch (error) {
-            console.log(error);
             mensaje.value = ['Error al intentar agregar personal'];
         }
     }
