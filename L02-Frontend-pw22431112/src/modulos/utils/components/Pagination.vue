@@ -1,6 +1,7 @@
 <template>
     <div class="pagination-container">
         <button
+            title="Ir a la pagina 1"
             :disabled="currentPage === 1"
             @click="goToPage(1)"
             class="btn btn-outline-primary"
@@ -9,6 +10,7 @@
         </button>
         
         <button
+            title="Ir a la página anterior"
             :disabled="currentPage === 1"
             @click="changePage(currentPage - 1)"
             class="btn btn-outline-primary"
@@ -19,6 +21,7 @@
         <span class="mx-2">Página {{ currentPage }} de {{ totalPages }}</span>
 
         <button
+            title="Ir a la página siguiente"
             :disabled="currentPage === totalPages"
             @click="changePage(currentPage + 1)"
             class="btn btn-outline-primary"

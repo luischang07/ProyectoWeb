@@ -25,7 +25,6 @@ export const personalSchema = toTypedSchema(
             telefono: zod.string({ message: 'Requerido' })
                 .min(10, { message: 'Debe tener al menos 10 caracteres' })
                 .max(15, { message: 'Debe tener menos de 15 caracteres' }),
-            estatus: zod.string({ message: 'Requerido' }).max(1, { message: 'Debe ser de solo 1 caracter' })
         })
     )
 )

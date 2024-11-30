@@ -6,11 +6,11 @@
                 <p>Listado del personal registrado.</p>
             </div>
             <div class="col-md-3 text-right">
-                <router-link :to="{ path: '/personal/agregar' }">
+                <RouterLink :to="{ path: '/personal/agregar' }">
                     <button class="btn btn-sm btn-outline-primary">
                         <i class="fa fa-plus"></i> Agregar
                     </button>
-                </router-link>
+                </RouterLink>
             </div>
         </div>
         <div class="row mt-3">
@@ -29,9 +29,9 @@
         </div>
     </section>
     <section class="container text-center mt-3">
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead>
-                <tr>
+                <tr class="table-info">
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
@@ -52,16 +52,12 @@
                     <td>{{ persona.estatus }}</td>
                     <td class="centrado">
                         <fieldset class="btn-group" aria-label="Basic outline example">
-                            <button type="button" class="btn btn-sm btn-outline-primary">
-                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/editar'}">
-                                    <i class="fa fa-edit"></i>
-                                </RouterLink>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-danger">
-                                <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/borrar'}">
-                                    <i class="fa fa-trash"></i>
-                                </RouterLink>
-                            </button>
+                            <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1" :to="{path: '/personal/'+persona.id+'/editar'}">
+                                <i class="fa fa-edit"></i>
+                            </RouterLink>
+                            <RouterLink title="Eliminar" class="btn btn-sm btn-outline-danger p-2 m-1" :to="{path: '/personal/'+persona.id+'/borrar'}">
+                                <i class="fa fa-trash"></i>
+                            </RouterLink>    
                         </fieldset>
                     </td>
                 </tr>
@@ -77,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-import { usePersonal } from '../controladores/UsePersonal';
+import { usePersonal } from '../controladores/usePersonal';
 import { errorToast } from '@/modulos/utils/displayToast';
 import Pagination from '@/modulos/utils/components/Pagination.vue';
 
