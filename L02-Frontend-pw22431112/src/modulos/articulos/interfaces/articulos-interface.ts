@@ -3,7 +3,7 @@ export interface Articulos{
     descripcion: string,
     precio: number,
     cantidad_en_almacen: number,
-    fecha_caducidad: Date | string
+    fecha_caducidad: Date | string | null,
 }
 
 export type ArticulosAgregar =  Omit<Articulos, 'id'>;
