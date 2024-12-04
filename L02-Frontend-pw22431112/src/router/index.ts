@@ -1,4 +1,5 @@
 import ArticulosVue from '@/modulos/articulos/vistas/ArticulosVue.vue'
+import { getAuth } from 'firebase/auth'
 import ArticulosEditarVue from '@/modulos/articulos/vistas/ArticulosEditarVue.vue'
 import ClienteAgregarVue from '@/modulos/cliente/vistas/ClienteAgregarVue.vue'
 import ClienteBorrarVue from '@/modulos/cliente/vistas/ClienteBorrarVue.vue'
@@ -11,74 +12,200 @@ import PersonalVue from '@/modulos/personal/vistas/PersonalVue.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import ArticulosBorrarVue from '@/modulos/articulos/vistas/ArticulosBorrarVue.vue'
 import ArticulosAgregarVue from '@/modulos/articulos/vistas/ArticulosAgregarVue.vue'
+import BienvenidaVue from '@/modulos/principal/vistas/BienvenidaVue.vue'
+import SignUPVue from '@/modulos/auth/vistas/SignUPVue.vue'
+import SignINVue from '@/modulos/auth/vistas/SignINVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: na,
-    // },
+    {
+      path: '/',
+      name: 'home',
+      component: BienvenidaVue,
+    },
+    {
+      path: '/Bienvenida',
+      name: 'Bienvenida',
+      component: BienvenidaVue,
+    },
+    {
+      path: '/registrar',
+      name: 'registrar',
+      component: SignUPVue,
+    },
+    {
+      path: '/validacion',
+      name: 'validacion',
+      component: SignINVue,
+    },
     {
       path: '/personal',
       name: 'personal',
       component: PersonalVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/personal/:id/editar',
       name: 'personaleditar',
       component: PersonalEditarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/personal/agregar',
       name: 'personalagregar',
       component: PersonalAgregarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/personal/:id/borrar',
       name: 'personalborrar',
       component: PersonalBorrar,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/clientes',
       name: 'clientes',
       component: ClienteVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/clientes/:id/editar',
       name: 'clienteseditar',
       component: ClienteEditarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/clientes/agregar',
       name: 'clientesagregar',
       component: ClienteAgregarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/clientes/:id/borrar',
       name: 'clientesborrar',
       component: ClienteBorrarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/articulos',
       name: 'articulos',
       component: ArticulosVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/articulos/:id/editar',
       name: 'articuloseditar',
       component: ArticulosEditarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/articulos/:id/borrar',
       name: 'articulosborrar',
       component: ArticulosBorrarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
     {
       path: '/articulos/agregar',
       name: 'articulosagregar',
       component: ArticulosAgregarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
     },
   ],
 })
