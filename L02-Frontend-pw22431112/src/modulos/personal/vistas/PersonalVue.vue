@@ -2,7 +2,7 @@
     <section class="container text-center mt-3">
         <div class="row justify-content-between align-items-center p-2">
             <div class="col-md-6">
-                <h3>Personal</h3>
+                <h3 class="titulo">Personal</h3>
                 <p>Listado del personal registrado.</p>
             </div>
             <div class="col-md-3 text-right">
@@ -112,4 +112,18 @@ watch([filterValue, filterField, page], fetchPersonal);
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+.table-hover tr:hover {
+    background-color: #f5f5f5;
+}
+
+.titulo{
+    font-size: 2.3em;
+    font-weight: 400;
+    font-family: "Archivo Black", sans-serif;
+    font-style: normal;
+}
+th{
+    background-color: #ae667c;
+}
 </style>

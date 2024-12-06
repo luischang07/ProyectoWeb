@@ -18,6 +18,16 @@ export const useArticulos = () => {
         }
     };
 
+    const getAllArticulos = async () => {
+        try {
+            const response = await articulosAPI.get<Articulos[]>(`/getArticulos`)
+            articulos.value = response.data;
+            console.log(response.data);
+        } catch (error) {
+            mensaje.value = ['No fue posible conectarse con el servidor'];
+        }
+    }
+
     const setArticulos = async (articulos: ArticulosAgregar) => {
         try {
             const response = await articulosAPI.post('/', articulos)
@@ -78,6 +88,8 @@ export const useArticulos = () => {
         setArticulos,
         getArticulosById,
         updateArticulos,
-        deleteArticulos
+        deleteArticulos,
+        getAllArticulos
     }
+    
 }

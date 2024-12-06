@@ -73,6 +73,25 @@ export const getArticulos = async (req: Request) => {
     }
 };
 
+export const getAllArticulos = async () => {
+    try {
+        const [rawResults] = await conexion.query('SELECT * FROM articulos');
+        console.log(rawResults);
+        const results = Array.isArray(rawResults) ? rawResults.map(row => ({
+            ...row,
+            fecha_caducidad: new Date((row as any).fecha_caducidad).toISOString().split('T')[0]
+        })) : rawResults;
+
+        if (Array.isArray(results) && results.length > 0) {
+            return results;
+        } else {
+            return { mensaje: 'No hay articulos para mostrar', data: [] };
+        }
+    } catch (err) {
+        return { error: 'No se pueden obtener los articulos' };
+    }
+};
+
 export const createArticulo = async (nuevo:ArticuloNuevo)=>{
     try {
         nuevo.fecha_caducidad = new Date(nuevo.fecha_caducidad); // se convierte la fecha a objeto Date aa-mm-dd 

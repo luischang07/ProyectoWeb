@@ -56,3 +56,12 @@ export const eliminarArticulo = async (req: Request, res: Response) => {
         res.status(500).send({ error: 'No se puede eliminar el articulo' });
     }
 }
+
+export const obtenerArticulosSinPaginar = async (_req: Request, res: Response) => {
+    try {
+        const articulos = await articulosServices.getAllArticulos();
+        res.json(articulos);
+    } catch (err) {
+        res.status(500).send({ error: 'No se puede obtener los articulos desde controller' });
+    }
+};
