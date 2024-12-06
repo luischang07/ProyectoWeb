@@ -5,10 +5,16 @@
 </script>
 
 <template>
-    <header>
-        <MenuVue />
-    </header>
 
+    <header>
+        <MenuVue />      
+    </header>
     <RouterView />
-    
+
+
 </template>
+
+<style scoped>
+
+
+</style>

@@ -15,6 +15,8 @@ import ArticulosAgregarVue from '@/modulos/articulos/vistas/ArticulosAgregarVue.
 import BienvenidaVue from '@/modulos/principal/vistas/BienvenidaVue.vue'
 import SignUPVue from '@/modulos/auth/vistas/SignUPVue.vue'
 import SignINVue from '@/modulos/auth/vistas/SignINVue.vue'
+import ComprasVue from '@/modulos/compras/vistas/ComprasVue.vue'
+import ComprasAgregarVue from '@/modulos/compras/vistas/ComprasAgregarVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -197,6 +199,34 @@ const router = createRouter({
       path: '/articulos/agregar',
       name: 'articulosagregar',
       component: ArticulosAgregarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/compras',
+      name: 'compras',
+      component: ComprasVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/compras/agregar',
+      name: 'comprasagregar',
+      component: ComprasAgregarVue,
       beforeEnter: (to, from, next) => {
         const auth = getAuth()
         const user = auth.currentUser
