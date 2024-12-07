@@ -85,7 +85,7 @@ Correr el Frontend:
 - esto correra ambas partes en el modo desarrollo.
 
 # Notas
-
+(Backend)
 Recuerde configurar correctamente sus variables de entorno creando un archivo .env dentro de la carpeta APITypescript.
 
 Dentro se deberá incluir:
@@ -96,3 +96,16 @@ Dentro se deberá incluir:
 `DB_DATABASE`
 `PORT`
 
+(Frontend)
+Recuerde configurar correctamente sus variables de entorno creando un archivo .env dentro de la carpeta L02-Frontend-pw22431112.
+
+Dentro se deberá incluir:
+
+`VITE_API_KEY`
+`VITE_AUTH_DOMAIN`
+`VITE_PROJECT_ID`
+`VITE_STORAGE_BUCKET`
+`VITE_MESSAGING_SENDER_ID`
+`VITE_APP_ID`
+
+Esto para utilizar un bucket de firebase y utilizar el metodo de authorizacion.
