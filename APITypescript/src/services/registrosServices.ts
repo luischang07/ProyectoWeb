@@ -6,7 +6,7 @@ import { conexion } from "../config/bd"
 
 export const getRegistros = async ()=>{
     try{
-        const [results] = await conexion.query('SELECT * FROM registros');
+        const [results] = await conexion.query('SELECT * FROM registro');
         return results;
     }catch(err){
         return {error: "No se puede obtener los registros"}
@@ -19,7 +19,6 @@ export const createRegistro = async (registro: Registros)=>{
         const validacion = registroSchema.safeParse(registro);
         if (!validacion.success)
             return { error: validacion.error }
-
         const [results] = await conexion.query('INSERT INTO registro(id_personal,fecha,hora,movimiento) VALUES(?,?,?,?)', [registro.id_personal,registro.fecha,registro.hora,registro.movimiento]);
         return results;
     }catch(err){

@@ -17,6 +17,8 @@ import SignUPVue from '@/modulos/auth/vistas/SignUPVue.vue'
 import SignINVue from '@/modulos/auth/vistas/SignINVue.vue'
 import ComprasVue from '@/modulos/compras/vistas/ComprasVue.vue'
 import ComprasAgregarVue from '@/modulos/compras/vistas/ComprasAgregarVue.vue'
+import RegistrosVue from '../modulos/registros/vistas/RegistrosVue.vue'
+import RegistrosAgregarVue from '@/modulos/registros/vistas/RegistrosAgregarVue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -237,6 +239,49 @@ const router = createRouter({
         }
       }
     },
+    {
+      path: '/clientes/registro',
+      name: 'registros',
+      component: RegistrosVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/clientes/registro',
+      name: 'registros',
+      component: RegistrosVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/registro/agregar',
+      name: 'agregarregistro',
+      component: RegistrosAgregarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+
   ],
 })
 
