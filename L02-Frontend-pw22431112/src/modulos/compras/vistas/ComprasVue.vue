@@ -11,6 +11,9 @@
                         <i class="fa fa-plus"></i> Agregar
                     </button>
                 </router-link>
+                <button @click="downloadExcel" class="btn btn-sm btn-outline-success ml-2">
+                    <i class="fa fa-download"></i> Descargar Excel
+                </button>
             </div>
         </div>
 
@@ -34,7 +37,7 @@
             </div>
         </div>
 
-        <!-- Tabla de clientes -->
+        <!-- Tabla de compras -->
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="table-responsive">
@@ -44,7 +47,7 @@
                                 <th>ID</th>
                                 <th>ID Articulo</th>
                                 <th>Cantidad</th>
-                                <th>precio</th>
+                                <th>Precio</th>
                                 <th>IVA</th>
                                 <th>Subtotal</th>
                                 <th>Total</th>
@@ -53,13 +56,13 @@
                         </thead>
                         <tbody>
                             <tr v-if="compras.length == 0">
-                                <td class="centrado" colspan="7">Sin Compras Registrados</td>
+                                <td class="centrado" colspan="8">Sin Compras Registradas</td>
                             </tr>
                             <tr v-for="compra in pagedCompras" :key="compra.id">
                                 <td>{{ compra.id }}</td>
                                 <td>{{ compra.id_articulo }}</td>
                                 <td>{{ compra.cantidad }}</td>
-                                <td>${{  compra.precio }}</td>
+                                <td>${{ compra.precio }}</td>
                                 <td>${{ compra.IVA }}</td>
                                 <td>${{ compra.subtotal }}</td>
                                 <td>${{ compra.total }}</td>
@@ -82,6 +85,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
+import * as XLSX from 'xlsx';
 import { useCompras } from '../controladores/useCompras';
 import { errorToast, warningToast } from '@/modulos/utils/displayToast';
 import pagination from '@/modulos/utils/components/Pagination.vue';
@@ -90,7 +95,7 @@ import { RouterLink } from 'vue-router';
 const { getCompras, compras, mensaje } = useCompras();
 const searchQuery = ref('');
 const searchField = ref('id');
-const currentPage = ref(Number(localStorage.getItem('currentPageCompras')) || 1); // Se guarda la página actual en localStorage
+const currentPage = ref(Number(localStorage.getItem('currentPageCompras')) || 1);
 const itemsPerPage = 10;
 
 onMounted(async () => {
@@ -126,11 +131,37 @@ const pagedCompras = computed(() => {
     return filteredCompras.value.slice(startIndex, startIndex + itemsPerPage);
 });
 
-// Función para manejar el cambio de página
 const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
-        localStorage.setItem('currentPageCompras', page.toString()); // Guardar la página actual en localStorage
+        localStorage.setItem('currentPageCompras', page.toString());
+    }
+};
+
+const downloadExcel = async () => {
+    try {
+        const response = await axios.get('http://localhost:3001/api/compras/getCompras');
+        const data = response.data;
+
+        // Convertir los datos a una hoja de cálculo
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Compras');
+
+        // Crear un archivo Excel
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+        // Descargar el archivo Excel
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'compras.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } catch (error) {
+        console.error('Error descargando el archivo Excel', error);
     }
 };
 </script>
@@ -141,13 +172,13 @@ const goToPage = (page: number) => {
     background-color: #f5f5f5;
 }
 
-.titulo{
+.titulo {
     font-size: 2.3em;
     font-weight: 400;
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
-th{
+th {
     background-color: #ae667c;
 }
 </style>

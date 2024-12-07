@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarPersonal = exports.modificarPersonal = exports.insertarPersonal = exports.obtenerPorTelefono = exports.obtenerUnPersonal = exports.obtenerPersonal = void 0;
+exports.eliminarPersonal = exports.modificarPersonal = exports.insertarPersonal = exports.obtenerPorTelefono = exports.obtenerUnPersonal = exports.obtenerPersonal = exports.obtenerPersonalSinPaginar = void 0;
 const PersonalServices = __importStar(require("../services/personalServices"));
 const obtenerPersonal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -45,6 +45,17 @@ const obtenerPersonal = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.obtenerPersonal = obtenerPersonal;
+const obtenerPersonalSinPaginar = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const personal = yield PersonalServices.getPersonalAll();
+        res.json(personal);
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send({ error: 'No se puede obtener el personal' });
+    }
+});
+exports.obtenerPersonalSinPaginar = obtenerPersonalSinPaginar;
 const obtenerUnPersonal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let personal = yield PersonalServices.getPersonalOne(Number(req.params.id));
     res.json(personal);
@@ -76,7 +87,6 @@ const modificarPersonal = (req, res) => __awaiter(void 0, void 0, void 0, functi
             telefono,
             estatus
         });
-        console.log(modificado);
         res.json(modificado);
     }
     catch (error) {

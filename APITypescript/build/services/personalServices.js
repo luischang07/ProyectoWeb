@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPersonalTelefono = exports.deletePersonal = exports.updatePersonal = exports.createPersonal = exports.getPersonal = exports.getPersonalOne = void 0;
+exports.getPersonalTelefono = exports.deletePersonal = exports.updatePersonal = exports.createPersonal = exports.getPersonal = exports.getPersonalAll = exports.getPersonalOne = void 0;
 const bd_1 = require("../config/bd");
 const persona_Schema_1 = require("../schemas/persona.Schema");
 const getPersonalOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,11 +22,20 @@ const getPersonalOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
         return results;
     }
     catch (err) {
-        console.log(err);
         return { error: "No se puede obtener el personal" };
     }
 });
 exports.getPersonalOne = getPersonalOne;
+const getPersonalAll = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const [results] = yield bd_1.conexion.query('SELECT * FROM personal');
+        return results;
+    }
+    catch (err) {
+        return { error: "No se puede obtener el personal" };
+    }
+});
+exports.getPersonalAll = getPersonalAll;
 const getPersonal = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { page = 1, limit = 12, filterField, filterValue } = req.query;
@@ -61,7 +70,6 @@ const getPersonal = (req) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     catch (err) {
-        console.error(err);
         throw new Error('No se puede obtener el personal');
     }
 });
@@ -77,7 +85,6 @@ const createPersonal = (nuevo) => __awaiter(void 0, void 0, void 0, function* ()
         return results;
     }
     catch (err) {
-        console.log(err);
         return { error: "No se puede crear el personal" };
     }
 });
@@ -88,7 +95,7 @@ const updatePersonal = (modificado) => __awaiter(void 0, void 0, void 0, functio
         if (!validacion.success) {
             return { error: validacion.error };
         }
-        const [results] = yield bd_1.conexion.query('UPDATE personal SET' +
+        const [results] = yield bd_1.conexion.query('UPDATE personal SET ' +
             'nombre = ?, direccion = ?, telefono = ?, estatus = ? WHERE id = ?', [modificado.nombre, modificado.direccion, modificado.telefono, modificado.estatus, modificado.id]);
         const result = results;
         if (!result.affectedRows) {
@@ -97,7 +104,6 @@ const updatePersonal = (modificado) => __awaiter(void 0, void 0, void 0, functio
         return results;
     }
     catch (err) {
-        console.log(err);
         return { error: "No se puede actualizar el personal" };
     }
 });
@@ -116,7 +122,6 @@ const deletePersonal = (id) => __awaiter(void 0, void 0, void 0, function* () {
         return { mensaje: "Personal eliminado" };
     }
     catch (err) {
-        console.log(err);
         return { error: "No se puede eliminar el personal" };
     }
 });
@@ -136,7 +141,6 @@ const getPersonalTelefono = (telefono) => __awaiter(void 0, void 0, void 0, func
         }
     }
     catch (err) {
-        console.log(err);
         return { error: "No se puede obtener el personal" };
     }
 });

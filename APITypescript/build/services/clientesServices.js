@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getClienteByTelefono = exports.getClienteByCorreo = exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getClientes = exports.getClienteOne = void 0;
+exports.getClienteByTelefono = exports.getClienteByCorreo = exports.deleteCliente = exports.updateCliente = exports.createCliente = exports.getClientes = exports.getClientesSinPaginar = exports.getClienteOne = void 0;
 const bd_1 = require("../config/bd");
 const cliente_Schema_1 = require("../schemas/cliente.Schema");
 const getClienteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,18 +27,54 @@ const getClienteOne = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getClienteOne = getClienteOne;
-const getClientes = () => __awaiter(void 0, void 0, void 0, function* () {
+const getClientesSinPaginar = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const [results] = yield bd_1.conexion.query('SELECT * FROM clientes');
+        console.log(results);
+        return results;
+    }
+    catch (err) {
+        console.error(err);
+        return { error: "No se puede obtener los clientes" };
+    }
+});
+exports.getClientesSinPaginar = getClientesSinPaginar;
+const getClientes = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { page = 1, limit = 12, filterField, filterValue } = req.query;
+        const offset = (Number(page) - 1) * Number(limit);
+        // Construir la consulta con los filtros
+        let query = 'SELECT * FROM clientes';
+        const params = [];
+        if (filterField && filterValue) {
+            query += ` WHERE ?? LIKE ?`;
+            params.push(filterField, `%${filterValue}%`);
+        }
+        query += ' LIMIT ? OFFSET ?';
+        params.push(Number(limit), offset);
+        // Ejecutar la consulta
+        const [results] = yield bd_1.conexion.query(query, params);
+        // Obtener el total de registros para la paginación
+        const [countResult] = yield bd_1.conexion.query(`SELECT COUNT(*) as total FROM clientes ${filterField && filterValue ? 'WHERE ?? LIKE ?' : ''}`, filterField && filterValue ? [filterField, `%${filterValue}%`] : []);
+        const total = Array.isArray(countResult) ? countResult[0].total : 0;
+        const totalPages = Math.ceil(total / Number(limit));
         if (Array.isArray(results) && results.length > 0) {
-            return results;
+            return {
+                data: results,
+                pagination: {
+                    currentPage: Number(page),
+                    totalPages,
+                    totalItems: total,
+                },
+            };
         }
         else {
-            return { mensaje: "No hay clientes para mostrar" };
+            return { mensaje: 'No hay clientes para mostrar', data: [], pagination: { totalItems: 0 } };
         }
     }
     catch (err) {
-        return { error: "No se puede obtener el cliente" };
+        console.error(err);
+        throw new Error('No se puede obtener los clientes');
     }
 });
 exports.getClientes = getClientes;

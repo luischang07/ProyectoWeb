@@ -11,20 +11,12 @@
                         <i class="fa fa-plus"></i> Agregar
                     </button>
                 </RouterLink>
+                <button @click="downloadExcel" class="btn btn-sm btn-outline-success ml-2">
+                    <i class="fa fa-download"></i> Descargar Excel
+                </button>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-8">
-                <input type="text" class="form-control" v-model="filterValue" placeholder="Buscar...">
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <label for="filterField" class="form-label me-2 mb-0">Filtro:</label>
-                <select v-model="filterField" class="form-select">
-                    <option value="descripcion">Descripcion</option>
-                    <option value="precio">Precio</option>
-                </select>
-            </div>
-        </div>
+        <!-- Resto del código -->
     </section>
     <section class="container text-center mt-3">
         <table class="table table-bordered">
@@ -71,6 +63,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
+import axios from 'axios';
+import * as XLSX from 'xlsx';
 import { useArticulos } from '../controladores/useArticulos';
 import { errorToast } from '@/modulos/utils/displayToast';
 import Pagination from '@/modulos/utils/components/Pagination.vue';
@@ -103,6 +97,33 @@ const fetchArticulos = async () => {
 const handlePageChange = (newPage: number) => {
     page.value = newPage;
     localStorage.setItem('currentPageArticulos', newPage.toString());
+};
+
+const downloadExcel = async () => {
+    try {
+        const response = await axios.get('http://localhost:3001/api/articulos/getArticulos');
+        const data = response.data;
+
+        // Convertir los datos a una hoja de cálculo
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Artículos');
+
+        // Crear un archivo Excel
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+        // Descargar el archivo Excel
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'articulos.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } catch (error) {
+        console.error('Error descargando el archivo Excel', error);
+    }
 };
 
 onMounted(fetchArticulos);
