@@ -11,6 +11,9 @@
                         <i class="fa fa-plus"></i> Agregar
                     </button>
                 </router-link>
+                <button @click="downloadExcel" class="btn btn-sm btn-outline-success ml-2">
+                    <i class="fa fa-download"></i> Descargar Excel
+                </button>
             </div>
         </div>
 
@@ -83,6 +86,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
+import * as XLSX from 'xlsx';
 import { useCliente } from '../controladores/useCliente';
 import { errorToast, warningToast } from '@/modulos/utils/displayToast';
 import pagination from '@/modulos/utils/components/Pagination.vue';
@@ -131,6 +136,33 @@ const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
         localStorage.setItem('currentPageCliente', page.toString()); // Guardar la página actual en localStorage
+    }
+};
+
+const downloadExcel = async () => {
+    try {
+        const response = await axios.get('http://localhost:3001/api/clientes/getClientes');
+        const data = response.data;
+
+        // Convertir los datos a una hoja de cálculo
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Clientes');
+
+        // Crear un archivo Excel
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+
+        // Descargar el archivo Excel
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'clientes.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } catch (error) {
+        console.error('Error descargando el archivo Excel', error);
     }
 };
 </script>

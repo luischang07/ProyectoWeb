@@ -16,6 +16,17 @@ export const getClienteOne = async (id:number)=>{
     } 
 }
 
+export const getClientesSinPaginar = async ()=>{
+    try {
+        const [results] = await conexion.query('SELECT * FROM clientes');
+        console.log(results);
+        return results;
+    } catch (err) {
+        console.error(err);
+        return {error:"No se puede obtener los clientes"}
+    } 
+}
+
 export const getClientes = async (req: Request) => {
     try {
         const { page = 1, limit = 12, filterField, filterValue } = req.query;

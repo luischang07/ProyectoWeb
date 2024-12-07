@@ -11,6 +11,11 @@ export const obtenerUnCliente = async (req: Request, res: Response) => {
     res.json(cliente);
 }
 
+export const getClientesSinPaginar = async (_req: Request, res: Response) => {
+    let clientes = await ClienteService.getClientesSinPaginar();
+    res.json(clientes);
+};
+
 export const insertarCliente = async (req: Request, res: Response) => {
     try {
         const { nombre, direccion, telefono, correo_electronico, ciudad } = req.body;

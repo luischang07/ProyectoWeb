@@ -32,10 +32,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarCliente = exports.actualizarCliente = exports.insertarCliente = exports.obtenerUnCliente = exports.obtenerClientes = void 0;
+exports.eliminarCliente = exports.actualizarCliente = exports.insertarCliente = exports.getClientesSinPaginar = exports.obtenerUnCliente = exports.obtenerClientes = void 0;
 const ClienteService = __importStar(require("../services/clientesServices"));
-const obtenerClientes = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let clientes = yield ClienteService.getClientes();
+const obtenerClientes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let clientes = yield ClienteService.getClientes(req);
     res.json(clientes);
 });
 exports.obtenerClientes = obtenerClientes;
@@ -44,6 +44,11 @@ const obtenerUnCliente = (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.json(cliente);
 });
 exports.obtenerUnCliente = obtenerUnCliente;
+const getClientesSinPaginar = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let clientes = yield ClienteService.getClientesSinPaginar();
+    res.json(clientes);
+});
+exports.getClientesSinPaginar = getClientesSinPaginar;
 const insertarCliente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { nombre, direccion, telefono, correo_electronico, ciudad } = req.body;

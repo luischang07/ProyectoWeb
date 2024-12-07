@@ -201,7 +201,6 @@ const timerRedirect = () => {
     max-width: 600px; /* Puedes ajustar este valor según el tamaño que desees */
     width: 100%;
 }
-
 .card {
     margin: 0 auto;
     padding: 2rem;
