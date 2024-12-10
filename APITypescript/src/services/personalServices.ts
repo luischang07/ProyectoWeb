@@ -38,7 +38,7 @@ export const getPersonal = async (req: Request) => {
 
         if (filterField && filterValue) {
             query += ` WHERE ?? LIKE ?`;
-            params.push(filterField, `%${filterValue}%`);
+            params.push(filterField, `%${String(filterValue)}%`);
         }
 
         query += ' LIMIT ? OFFSET ?';
@@ -50,7 +50,7 @@ export const getPersonal = async (req: Request) => {
         // Obtener el total de registros para la paginación
         const [countResult] = await conexion.query(
             `SELECT COUNT(*) as total FROM personal ${filterField && filterValue ? 'WHERE ?? LIKE ?' : ''}`,
-            filterField && filterValue ? [filterField, `%${filterValue}%`] : []
+            filterField && filterValue ? [filterField, `%${String(filterValue)}%`] : []
         );
 
         const total = Array.isArray(countResult) ? (countResult[0] as any).total : 0;
@@ -69,7 +69,7 @@ export const getPersonal = async (req: Request) => {
             return { mensaje: 'No hay personal para mostrar', data: [], pagination: { totalItems: 0 } };
         }
     } catch (err) {
-        throw new Error('No se puede obtener el personal');
+        throw err;
     }
 };
 
