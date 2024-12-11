@@ -32,46 +32,46 @@
         </div>
     </section>
     <section class="container text-center mt-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="personal.length == 0">
-                    <td class="centrado" colspan="6">Sin Personal Registrado</td>
-                </tr>
-                <tr v-else v-for="(persona, index) in personal" :key="index">
-                    <td>{{ persona.id }}</td>
-                    <td>{{ persona.nombre }}</td>
-                    <td>{{ persona.direccion }}</td>
-                    <td>{{ persona.telefono }}</td>
-                    <td>{{ persona.estatus }}</td>
-                    <td class="centrado">
-                        <fieldset class="btn-group" aria-label="Basic outline example">
-                            <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1" :to="{path: '/personal/'+persona.id+'/editar'}">
-                                <i class="fa fa-edit"></i>
-                            </RouterLink>
-                            <RouterLink title="Eliminar" class="btn btn-sm btn-outline-danger p-2 m-1" :to="{path: '/personal/'+persona.id+'/borrar'}">
-                                <i class="fa fa-trash"></i>
-                            </RouterLink>    
-                        </fieldset>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Estatus</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="personal.length == 0">
+                        <td class="centrado" colspan="6">Sin Personal Registrado</td>
+                    </tr>
+                    <tr v-else v-for="(persona, index) in personal" :key="index">
+                        <td>{{ persona.id }}</td>
+                        <td>{{ persona.nombre }}</td>
+                        <td>{{ persona.direccion }}</td>
+                        <td>{{ persona.telefono }}</td>
+                        <td>{{ persona.estatus }}</td>
+                        <td class="centrado">
+                            <fieldset class="btn-group" aria-label="Basic outline example">
+                                <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1"
+                                    :to="{ path: '/personal/' + persona.id + '/editar' }">
+                                    <i class="fa fa-edit"></i>
+                                </RouterLink>
+                                <RouterLink title="Eliminar" class="btn btn-sm btn-outline-danger p-2 m-1"
+                                    :to="{ path: '/personal/' + persona.id + '/borrar' }">
+                                    <i class="fa fa-trash"></i>
+                                </RouterLink>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
-    <Pagination 
-        :currentPage="page" 
-        :totalPages="totalPages" 
-        @update:currentPage="handlePageChange" 
-    />
+    <Pagination :currentPage="page" :totalPages="totalPages" @update:currentPage="handlePageChange" />
 </template>
 
 <script setup lang="ts">
@@ -145,17 +145,23 @@ watch([filterValue, filterField, page], fetchPersonal);
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 .table-hover tr:hover {
     background-color: #f5f5f5;
 }
 
-.titulo{
+.titulo {
     font-size: 2.3em;
     font-weight: 400;
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
-th{
+
+th {
     background-color: #ae667c;
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 </style>

@@ -17,12 +17,16 @@ export const getRegistros = async () => {
 export const createRegistro = async (registro: Registros) => {
     try {
         registro.fecha = new Date(registro.fecha);
+
         const validacion = registroSchema.safeParse(registro);
-        if (!validacion.success)
+        if (!validacion.success) {
             return { error: validacion.error }
-        const [results] = await conexion.query('INSERT INTO registro(id_personal,fecha,hora,movimiento) VALUES(?,?,?,?)', [registro.id_personal, registro.fecha, registro.hora, registro.movimiento]);
+        }
+
+        const [results] = await conexion.query('INSERT INTO registros(id_personal,fecha,hora,movimiento) VALUES(?,?,?,?)', [registro.id_personal, registro.fecha, registro.hora, registro.movimiento]);
         return results;
     } catch (err) {
+        console.log("Error: ", err);
         return { error: "No se puede insertar el registro" }
     }
 }

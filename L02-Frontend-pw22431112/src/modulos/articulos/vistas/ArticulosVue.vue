@@ -19,46 +19,47 @@
         <!-- Resto del código -->
     </section>
     <section class="container text-center mt-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th>ID</th>
-                    <th>Descripcion</th>
-                    <th>Precio</th>
-                    <th>Cantidad en almacen</th>
-                    <th>Fecha de Caducidad</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="articulos.length == 0">
-                    <td class="centrado" colspan="6">Sin Artículos Registrados</td>
-                </tr>
-                <tr v-else v-for="(articulo, index) in articulos" :key="index">
-                    <td>{{ articulo.id }}</td>
-                    <td>{{ articulo.descripcion }}</td>
-                    <td>${{ articulo.precio }}</td>
-                    <td> {{ articulo.cantidad_en_almacen }}</td>
-                    <td>{{ articulo.fecha_caducidad === '1969-12-31' ? 'Sin fecha de caducidad' : articulo.fecha_caducidad }}</td>
-                    <td class="centrado">
-                        <fieldset class="btn-group" aria-label="Basic outline example">
-                            <RouterLink class="item btn btn-sm btn-outline-primary p-2 m-1" :to="{path: '/articulos/'+articulo.id+'/editar'}">
-                                <i class="fa fa-edit"></i>
-                            </RouterLink>
-                            <RouterLink class="btn btn-sm btn-outline-danger p-2 m-1" :to="{path: '/articulos/'+articulo.id+'/borrar'}">
-                                <i class="fa fa-trash"></i>
-                            </RouterLink>
-                        </fieldset>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Cantidad en almacen</th>
+                        <th>Fecha de Caducidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="articulos.length == 0">
+                        <td class="centrado" colspan="6">Sin Artículos Registrados</td>
+                    </tr>
+                    <tr v-else v-for="(articulo, index) in articulos" :key="index">
+                        <td>{{ articulo.id }}</td>
+                        <td>{{ articulo.descripcion }}</td>
+                        <td>${{ articulo.precio }}</td>
+                        <td> {{ articulo.cantidad_en_almacen }}</td>
+                        <td>{{ articulo.fecha_caducidad === '1969-12-31' ? 'Sin fecha de caducidad' :
+                            articulo.fecha_caducidad }}</td>
+                        <td class="centrado">
+                            <fieldset class="btn-group" aria-label="Basic outline example">
+                                <RouterLink class="item btn btn-sm btn-outline-primary p-2 m-1"
+                                    :to="{ path: '/articulos/' + articulo.id + '/editar' }">
+                                    <i class="fa fa-edit"></i>
+                                </RouterLink>
+                                <RouterLink class="btn btn-sm btn-outline-danger p-2 m-1"
+                                    :to="{ path: '/articulos/' + articulo.id + '/borrar' }">
+                                    <i class="fa fa-trash"></i>
+                                </RouterLink>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
-    <Pagination 
-        :currentPage="page" 
-        :totalPages="totalPages" 
-        @update:currentPage="handlePageChange" 
-    />
+    <Pagination :currentPage="page" :totalPages="totalPages" @update:currentPage="handlePageChange" />
 </template>
 
 <script setup lang="ts">
@@ -74,7 +75,7 @@ const filterValue = ref('');
 const filterField = ref('descripcion');
 const page = ref(Number(localStorage.getItem('currentPageArticulos')) || 1);
 const limit = 12;
-const totalPages = ref(1); // Total de páginas, actualiza este valor después de obtener datos
+const totalPages = ref(1); // Total de páginas, actualiza este valor deswpués de obtener datos
 
 const fetchArticulos = async () => {
     const params = {
@@ -132,17 +133,23 @@ watch([filterValue, filterField, page], fetchArticulos);
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 .table-hover tr:hover {
     background-color: #f5f5f5;
 }
 
-.titulo{
+.titulo {
     font-size: 2.3em;
     font-weight: 400;
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
-th{
+
+th {
     background-color: #ae667c;
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 </style>

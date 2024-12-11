@@ -35,12 +35,12 @@
             </li>
             <li class="nav-item margin" v-if="usuarioAuthenticado">
               <RouterLink
-                :class="['nav-link', 'item', 'text-dark', 'fw-bolder', 'font-size', getLinkClass('/registro')]"
+                :class="['nav-link', 'item', 'text-dark', 'fw-bolder', 'font-size', getLinkClass('/clientes/registro')]"
                 to="/clientes/registro">Registro</RouterLink>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item margin" v-if="usuarioAuthenticado">
+            <li class="nav-item margin align-end" v-if="usuarioAuthenticado">
               <button class="nav-link btn-registro text-white fw-bolder d-flex align-items-center"
                 @click.prevent="cerrarSesion">
                 <span class="material-symbols-outlined">logout</span>
@@ -81,7 +81,7 @@ const cerrarSesion = async () => {
 }
 
 const getLinkClass = (ruta: string) => {
-  return route.path === ruta ? 'bg-link-active' : '';
+  return route.path === ruta ? 'bg-link-active text-white' : '';
 }
 
 onMounted(() => {
@@ -117,6 +117,8 @@ onMounted(() => {
 
 .btn-registro {
   background-color: #000;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
   color: #fff;
 }
 
@@ -137,6 +139,8 @@ onMounted(() => {
 .bg-link-active {
   background-color: #965067;
   border-radius: 35px;
+  color: white;
+  /* Ensure text color is white when active */
 }
 
 .brand-size {
@@ -176,5 +180,26 @@ onMounted(() => {
 
 .btn:hover {
   background-color: var(--primary-hover-color);
+}
+
+.navbar {
+  justify-content: center;
+}
+
+.navbar-collapse {
+  justify-content: center;
+}
+
+.navbar-nav {
+  width: 100%;
+  justify-content: center;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+.align-end {
+  margin-left: auto;
 }
 </style>

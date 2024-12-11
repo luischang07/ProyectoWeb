@@ -75,11 +75,7 @@
         </div>
 
         <!-- Paginación -->
-        <pagination
-            :currentPage="currentPage"
-            :totalPages="totalPages"
-            @update:currentPage="goToPage"
-        />
+        <pagination :currentPage="currentPage" :totalPages="totalPages" @update:currentPage="goToPage" />
     </section>
 </template>
 
@@ -116,9 +112,9 @@ const filteredCompras = computed(() => {
     const query = searchQuery.value.toLowerCase();
     return compras.value.filter((compra) => {
         return (compra as { [key: string]: string | number })[searchField.value]
-        ?.toString()
-        .toLowerCase()
-        .includes(query);
+            ?.toString()
+            .toLowerCase()
+            .includes(query);
     });
 });
 
@@ -168,6 +164,7 @@ const downloadExcel = async () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 .table-hover tr:hover {
     background-color: #f5f5f5;
 }
@@ -178,7 +175,12 @@ const downloadExcel = async () => {
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
+
 th {
     background-color: #ae667c;
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 </style>

@@ -25,12 +25,14 @@ export const useRegistros = () => {
 
             if (response.data.error) {
                 let { error } = response.data;
+                console.log(error);
                 mensaje.value = error.issues.map((issue: { message: string }) => issue.message);
             } else {
                 mensaje.value = ['Registro agregado con éxito'];
             }
 
         } catch (error) {
+            console.log(error);
             mensaje.value = ['Error al intentar agregar registro'];
         }
     }

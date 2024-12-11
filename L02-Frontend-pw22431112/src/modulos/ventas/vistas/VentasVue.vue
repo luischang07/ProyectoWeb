@@ -36,51 +36,53 @@
         </div>
     </section>
     <section class="container text-center mt-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th>ID</th>
-                    <th>ID Artículo</th>
-                    <th>ID Cliente</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>IVA</th>
-                    <th>Subtotal</th>
-                    <th>Total</th>
-                    <th>Fecha Venta</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="ventas.length == 0">
-                    <td class="centrado" colspan="10">Sin Ventas Registradas</td>
-                </tr>
-                <tr v-else v-for="(venta, index) in ventas" :key="index">
-                    <td>{{ venta.id }}</td>
-                    <td>{{ venta.id_articulo }}</td>
-                    <td>{{ venta.id_cliente }}</td>
-                    <td>{{ venta.cantidad }}</td>
-                    <td>$ {{ venta.precio }}</td>
-                    <td>{{ venta.IVA }}</td>
-                    <td>$ {{ venta.subtotal }}</td>
-                    <td>$ {{ venta.total }}</td>
-                    <td>{{ venta.fecha_venta ? formatDate(String(venta.fecha_venta)) : 'N/A' }}</td>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th>ID</th>
+                        <th>ID Artículo</th>
+                        <th>ID Cliente</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>IVA</th>
+                        <th>Subtotal</th>
+                        <th>Total</th>
+                        <th>Fecha Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="ventas.length == 0">
+                        <td class="centrado" colspan="10">Sin Ventas Registradas</td>
+                    </tr>
+                    <tr v-else v-for="(venta, index) in ventas" :key="index">
+                        <td>{{ venta.id }}</td>
+                        <td>{{ venta.id_articulo }}</td>
+                        <td>{{ venta.id_cliente }}</td>
+                        <td>{{ venta.cantidad }}</td>
+                        <td>$ {{ venta.precio }}</td>
+                        <td>{{ venta.IVA }}</td>
+                        <td>$ {{ venta.subtotal }}</td>
+                        <td>$ {{ venta.total }}</td>
+                        <td>{{ venta.fecha_venta ? formatDate(String(venta.fecha_venta)) : 'N/A' }}</td>
 
-                    <td class="centrado">
-                        <fieldset class="btn-group" aria-label="Basic outline example">
-                            <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1"
-                                :to="{ path: '/ventas/' + venta.id + '/editar' }">
-                                <i class="fa fa-edit"></i>
-                            </RouterLink>
-                            <RouterLink title="Eliminar" class="btn btn-sm btn-outline-danger p-2 m-1"
-                                :to="{ path: '/ventas/' + venta.id + '/borrar' }">
-                                <i class="fa fa-trash"></i>
-                            </RouterLink>
-                        </fieldset>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <td class="centrado">
+                            <fieldset class="btn-group" aria-label="Basic outline example">
+                                <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1"
+                                    :to="{ path: '/ventas/' + venta.id + '/editar' }">
+                                    <i class="fa fa-edit"></i>
+                                </RouterLink>
+                                <RouterLink title="Eliminar" class="btn btn-sm btn-outline-danger p-2 m-1"
+                                    :to="{ path: '/ventas/' + venta.id + '/borrar' }">
+                                    <i class="fa fa-trash"></i>
+                                </RouterLink>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
     <Pagination :currentPage="page" :totalPages="totalPages" @update:currentPage="handlePageChange" />
 </template>
@@ -179,5 +181,9 @@ watch([filterValue, filterField, page], fetchVentas);
 
 th {
     background-color: #ae667c;
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 </style>

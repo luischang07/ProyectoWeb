@@ -24,5 +24,6 @@ import { RouterView } from 'vue-router';
     background-color: white;
     margin: 0 auto;
     min-height: 80vh;
+    padding: 1rem;
 }
 </style>

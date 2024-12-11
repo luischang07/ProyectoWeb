@@ -34,30 +34,31 @@
     </section>
 
     <section class="container text-center mt-3">
-        <table class="table table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th>ID</th>
-                    <th>ID Personal</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Movimiento</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="paginatedRegistros.length === 0">
-                    <td class="centrado" colspan="6">Sin registros</td>
-                </tr>
-                <tr v-else v-for="(registro, index) in paginatedRegistros" :key="index">
-                    <td>{{ registro.id }}</td>
-                    <td>{{ registro.id_personal }}</td>
-                    <td>{{ registro.fecha ? formatDate(String(registro.fecha)) : 'N/A' }}</td>
-                    <td>{{ registro.hora }}</td>
-                    <td>{{ registro.movimiento }}</td>
-                </tr>
-            </tbody>
-        </table>
-
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th>ID</th>
+                        <th>ID Personal</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Movimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="paginatedRegistros.length === 0">
+                        <td class="centrado" colspan="6">Sin registros</td>
+                    </tr>
+                    <tr v-else v-for="(registro, index) in paginatedRegistros" :key="index">
+                        <td>{{ registro.id }}</td>
+                        <td>{{ registro.id_personal }}</td>
+                        <td>{{ registro.fecha ? formatDate(String(registro.fecha)) : 'N/A' }}</td>
+                        <td>{{ registro.hora }}</td>
+                        <td>{{ registro.movimiento }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <Pagination :totalPages="totalPages" :currentPage="page" @update:currentPage="handlePageChange" />
     </section>
 </template>
@@ -174,5 +175,9 @@ watch([filterValue, filterField], () => {
 
 th {
     background-color: #ae667c;
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 </style>
