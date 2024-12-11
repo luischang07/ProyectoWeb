@@ -62,10 +62,12 @@
                                 <td>{{ cliente.correo_electronico }}</td>
                                 <td>{{ cliente.ciudad }}</td>
                                 <td>
-                                    <RouterLink title="Editar" :to="{ path: '/clientes/'+ cliente.id +'/editar/' } " class="btn btn-sm btn-outline-primary p-2 m-1">
+                                    <RouterLink title="Editar" :to="{ path: '/clientes/' + cliente.id + '/editar/' }"
+                                        class="btn btn-sm btn-outline-primary p-2 m-1">
                                         <i class="fa fa-edit"></i>
                                     </RouterLink>
-                                    <RouterLink title="Eliminar" :to="{ path: '/clientes/' + cliente.id + '/borrar' }" class="btn btn-sm btn-outline-danger p-2 m-1">
+                                    <RouterLink title="Eliminar" :to="{ path: '/clientes/' + cliente.id + '/borrar' }"
+                                        class="btn btn-sm btn-outline-danger p-2 m-1">
                                         <i class="fa fa-trash"></i>
                                     </RouterLink>
                                 </td>
@@ -76,11 +78,7 @@
             </div>
         </div>
         <!-- Paginación -->
-        <pagination
-            :currentPage="currentPage"
-            :totalPages="totalPages"
-            @update:currentPage="goToPage"
-        />
+        <pagination :currentPage="currentPage" :totalPages="totalPages" @update:currentPage="goToPage" />
     </section>
 </template>
 
@@ -116,9 +114,9 @@ const filteredClientes = computed(() => {
     const query = searchQuery.value.toLowerCase();
     return clientes.value.filter((cliente) => {
         return (cliente as { [key: string]: string | number })[searchField.value]
-        ?.toString()
-        .toLowerCase()
-        .includes(query);
+            ?.toString()
+            .toLowerCase()
+            .includes(query);
     });
 });
 
@@ -169,18 +167,19 @@ const downloadExcel = async () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 .table-hover tr:hover {
     background-color: #f5f5f5;
 }
 
-.titulo{
+.titulo {
     font-size: 2.3em;
     font-weight: 400;
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
-th{
+
+th {
     background-color: #ae667c;
 }
-
 </style>

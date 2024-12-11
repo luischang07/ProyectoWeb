@@ -1,4 +1,5 @@
 # Dependencias de Node
+package-lock.json
 node_modules/
 
 # Archivos de sistema de Windows

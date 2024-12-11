@@ -13,6 +13,7 @@ export const useRegistros = () => {
         try {
             const response = await registrosAPI.get<Registro[]>(`/`)
             registros.value = response.data;
+            console.log(response.data);
         } catch (error) {
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
