@@ -19,6 +19,8 @@ import ComprasVue from '@/modulos/compras/vistas/ComprasVue.vue'
 import ComprasAgregarVue from '@/modulos/compras/vistas/ComprasAgregarVue.vue'
 import RegistrosVue from '../modulos/registros/vistas/RegistrosVue.vue'
 import RegistrosAgregarVue from '@/modulos/registros/vistas/RegistrosAgregarVue.vue'
+import VentasVue from '@/modulos/ventas/vistas/VentasVue.vue'
+import VentasBorrar from '@/modulos/ventas/vistas/VentasBorrar.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -281,6 +283,62 @@ const router = createRouter({
         }
       }
     },
+    {
+      path: '/ventas',
+      name: 'ventas',
+      component: VentasVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/ventas/agregar',
+      name: 'ventasagregar',
+      component: () => import('@/modulos/ventas/vistas/VentasAgregarVue.vue'),
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/ventas/:id/editar',
+      name: 'ventaseditar',
+      component: PersonalEditarVue,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    },
+    {
+      path: '/ventas/:id/borrar',
+      name: 'ventasborrar',
+      component: VentasBorrar,
+      beforeEnter: (to, from, next) => {
+        const auth = getAuth()
+        const user = auth.currentUser
+        if (user) {
+          next()
+        } else {
+          next('/validacion')
+        }
+      }
+    }
 
   ],
 })

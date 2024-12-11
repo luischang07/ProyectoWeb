@@ -102,10 +102,12 @@ watch(mensaje, showToast);
             <div class="card-header border-custom">
                 <h4 class="text-center">Agregar Compra</h4>
             </div>
-            <div class="alert alert-success text-center mt-3 p-2" v-if="mensaje && mensaje[0] === 'Compra agregada con éxito'" role="alert">
+            <div class="alert alert-success text-center mt-3 p-2"
+                v-if="mensaje && mensaje[0] === 'Compra agregada con éxito'" role="alert">
                 {{ mensaje[0].toString() }}
             </div>
-            <div class="alert alert-danger text-center mt-3 p-2" v-for="(error, index) in mensaje" :key="index" v-if="mensaje && mensaje[0] !== 'Compra agregada con éxito'" role="alert">
+            <div class="alert alert-danger text-center mt-3 p-2" v-for="(error, index) in mensaje" :key="index"
+                v-if="mensaje && mensaje[0] !== 'Compra agregada con éxito'" role="alert">
                 {{ error }}
             </div>
             <div class="card-body">
@@ -127,7 +129,8 @@ watch(mensaje, showToast);
                         <label for="id">ID Articulo</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-hash"></i></span>
-                            <Field type="text" class="form-control" name="id_articulo" v-model="compra.id_articulo" placeholder="ID Articulo" disabled />
+                            <Field type="text" class="form-control" name="id_articulo" v-model="compra.id_articulo"
+                                placeholder="ID Articulo" disabled />
                         </div>
                         <ErrorMessage name="id_articulo" class="errorValidacion" />
                     </div>
@@ -136,7 +139,8 @@ watch(mensaje, showToast);
                         <label for="cantidad">Cantidad</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-box"></i></span>
-                            <Field type="number" class="form-control" name="cantidad" v-model="compra.cantidad" placeholder="Cantidad" />
+                            <Field type="number" class="form-control" name="cantidad" v-model="compra.cantidad"
+                                placeholder="Cantidad" />
                         </div>
                         <ErrorMessage name="cantidad" class="errorValidacion" />
                     </div>
@@ -145,7 +149,8 @@ watch(mensaje, showToast);
                         <label for="precio">Precio</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                            <Field type="number" class="form-control" name="precio" v-model="compra.precio" placeholder="Cantidad" />
+                            <Field type="number" class="form-control" name="precio" v-model="compra.precio"
+                                placeholder="Cantidad" />
                         </div>
                         <ErrorMessage name="precio" class="errorValidacion" />
                     </div>
@@ -154,7 +159,8 @@ watch(mensaje, showToast);
                         <label for="IVA">IVA</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                            <Field type="number" class="form-control" name="IVA" v-model="compra.IVA" placeholder="IVA" disabled/>
+                            <Field type="number" class="form-control" name="IVA" v-model="compra.IVA" placeholder="IVA"
+                                disabled />
                         </div>
                     </div>
                     <!-- Subtotal -->
@@ -162,7 +168,8 @@ watch(mensaje, showToast);
                         <label for="subtotal">Subtotal</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                            <Field type="number" class="form-control" name="subtotal" v-model="compra.subtotal" placeholder="Subtotal" disabled/>
+                            <Field type="number" class="form-control" name="subtotal" v-model="compra.subtotal"
+                                placeholder="Subtotal" disabled />
                         </div>
                     </div>
                     <!-- Total -->
@@ -170,7 +177,8 @@ watch(mensaje, showToast);
                         <label for="total">Total</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                            <Field type="number" class="form-control" name="total" v-model="compra.total" placeholder="Total" disabled/>
+                            <Field type="number" class="form-control" name="total" v-model="compra.total"
+                                placeholder="Total" disabled />
                         </div>
                     </div>
                     <!-- Fecha de Compra -->
@@ -198,13 +206,16 @@ watch(mensaje, showToast);
 }
 
 .border-custom {
-    border: 3px solid #5cb85c; /* Un verde más oscuro para el borde */
+    border: 3px solid #5cb85c;
+    /* Un verde más oscuro para el borde */
     border-radius: 20px;
-    background-color: #dff0d8; /* Un verde claro que combina bien */
+    background-color: #dff0d8;
+    /* Un verde claro que combina bien */
 }
 
 .small-card {
-    max-width: 600px; /* Puedes ajustar este valor según el tamaño que desees */
+    max-width: 600px;
+    /* Puedes ajustar este valor según el tamaño que desees */
     width: 100%;
 }
 

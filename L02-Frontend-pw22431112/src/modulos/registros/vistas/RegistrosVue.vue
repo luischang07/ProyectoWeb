@@ -67,7 +67,7 @@ import { ref, onMounted, watch, computed } from 'vue';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { useRegistros } from '../controladores/useRegistros';
-import { errorToast } from '@/modulos/utils/displayToast';
+import { errorToast, warningToast } from '@/modulos/utils/displayToast';
 import Pagination from '@/modulos/utils/components/Pagination.vue';
 
 const { getRegistros, mensaje, registros } = useRegistros();
@@ -93,6 +93,10 @@ const fetchRegistros = async () => {
     if (mensaje.value[0] === 'No fue posible conectarse con el servidor') {
         errorToast(mensaje.value[0]);
         return;
+    }
+
+    if (filteredRegistros.value.length === 0) {
+        warningToast('No hay registros disponibles');
     }
 
     totalPages.value = Math.ceil(filteredRegistros.value.length / limit); // Actualizar el total de páginas
@@ -156,17 +160,19 @@ watch([filterValue, filterField], () => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 .table-hover tr:hover {
     background-color: #f5f5f5;
 }
 
-.titulo{
+.titulo {
     font-size: 2.3em;
     font-weight: 400;
     font-family: "Archivo Black", sans-serif;
     font-style: normal;
 }
-th{
+
+th {
     background-color: #ae667c;
 }
 </style>

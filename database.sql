@@ -57,7 +57,7 @@ CREATE TABLE Compras (
   FOREIGN KEY (id_articulo) REFERENCES Articulos(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE Registro (
+CREATE TABLE Registros (
   id int(11) NOT NULL AUTO_INCREMENT,
   id_personal int(11) NOT NULL,
   fecha DATE DEFAULT NULL,
