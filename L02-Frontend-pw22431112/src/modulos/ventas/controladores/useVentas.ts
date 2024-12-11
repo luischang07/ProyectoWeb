@@ -41,6 +41,7 @@ export const useVentas = () => {
         try {
             const response = await ventasAPI.get<Venta[]>(`/${id}`)
             ventas.value = response.data;
+            console.log(response.data);
         } catch (error) {
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
@@ -71,6 +72,7 @@ export const useVentas = () => {
             } else { mensaje.value = ['Venta eliminada']; }
 
         } catch (error) {
+            console.log(error);
             mensaje.value = ['No fue posible conectarse con el servidor'];
         }
 

@@ -60,11 +60,12 @@
                     <td>{{ venta.id_articulo }}</td>
                     <td>{{ venta.id_cliente }}</td>
                     <td>{{ venta.cantidad }}</td>
-                    <td>{{ venta.precio }}</td>
+                    <td>$ {{ venta.precio }}</td>
                     <td>{{ venta.IVA }}</td>
-                    <td>{{ venta.subtotal }}</td>
-                    <td>{{ venta.total }}</td>
-                    <td>{{ venta.fecha_venta }}</td>
+                    <td>$ {{ venta.subtotal }}</td>
+                    <td>$ {{ venta.total }}</td>
+                    <td>{{ venta.fecha_venta ? formatDate(String(venta.fecha_venta)) : 'N/A' }}</td>
+
                     <td class="centrado">
                         <fieldset class="btn-group" aria-label="Basic outline example">
                             <RouterLink title="Editar" class="btn btn-sm btn-outline-primary p-2 m-1"
@@ -104,7 +105,7 @@ const fetchVentas = async () => {
         page: page.value,
         limit,
         filterField: filterField.value || '',
-        ...(filterValue.value ? { filterValue: filterValue.value } : {}),
+        ...(filterValue.value ? { filterValue: filterValue.value } : { filterValue: '' }),
     };
     const response = await getVentas(params);
 
@@ -124,6 +125,14 @@ const fetchVentas = async () => {
 const handlePageChange = (newPage: number) => {
     page.value = newPage;
     localStorage.setItem('currentPageVentas', newPage.toString());
+};
+
+const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 };
 
 const downloadExcel = async () => {
