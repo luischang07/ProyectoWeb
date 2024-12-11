@@ -24,6 +24,13 @@ onMounted(async () => {
 
 const onValidated = async () => {
     disableButton.value = true;
+    ventas.value[0].id_articulo = parseInt(ventas.value[0].id_articulo.toString());
+    ventas.value[0].id_cliente = parseInt(ventas.value[0].id_cliente.toString());
+    ventas.value[0].cantidad = parseInt(ventas.value[0].cantidad.toString());
+    ventas.value[0].precio = parseFloat(ventas.value[0].precio.toString());
+    ventas.value[0].IVA = parseFloat(ventas.value[0].IVA.toString());
+    ventas.value[0].subtotal = parseFloat(ventas.value[0].subtotal.toString());
+    ventas.value[0].total = parseFloat(ventas.value[0].total.toString());
     await updateVenta(ventas.value[0]);
 };
 
